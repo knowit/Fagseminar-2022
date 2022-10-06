@@ -1,5 +1,5 @@
-import format from "date-fns/format";
-import { nb } from "date-fns/locale";
+import format from "date-fns/format/index.js";
+import nb from "date-fns/locale/nb/index.js";
 
 export function getDateFromDayAndMonth(
   day: number,
