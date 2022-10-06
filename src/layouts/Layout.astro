@@ -1,60 +1,65 @@
 ---
 export interface Props {
-	title: string;
+  title: string;
+  currentPage: "Home" | "Program" | "Favoritter";
 }
 
-const { title } = Astro.props;
+const { title, currentPage } = Astro.props;
+
+const linkNotSelected = "block";
+const linkSelected = "block selectedPage";
 ---
 
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body class="w-11/12 mx-auto">
+    <header class="w-full text-center">
+      <hr class="border-[3px] text-kleather" />
+      <section class="flex justify-between my-auto py-3">
+        <h1 class="font-bold">Knowit Fagseminar Roma</h1>
+        <nav class="flex min-w-max justify-evenly border">
+          <a
+            class={currentPage === "Home" ? linkSelected : linkNotSelected}
+            href="/">Home</a
+          >
+          <a
+            class={currentPage === "Program" ? linkSelected : linkNotSelected}
+            href="/program">Program</a
+          >
+        </nav>
+      </section>
+    </header>
+    <slot />
+
+    <style is:global>
+      @tailwind base;
+      @tailwind components;
+      @tailwind utilities;
+
+      @layer base {
+        html {
+          font-family: Arial, normal;
+        }
+        body {
+          @apply bg-ksand;
+        }
+      }
+
+      html {
+        font-family: Arial, normal;
+      }
+    </style>
+    <style>
+      .selectedPage {
+        @apply font-bold border-b-[3px] border-b-kblack;
+      }
+    </style>
+  </body>
 </html>
-<style>
-	:root {
-		--font-size-base: clamp(1rem, 0.34vw + 0.91rem, 1.19rem);
-		--font-size-lg: clamp(1.2rem, 0.7vw + 1.2rem, 1.5rem);
-		--font-size-xl: clamp(2.44rem, 2.38vw + 1.85rem, 3.75rem);
-
-		--color-text: hsl(12, 5%, 4%);
-		--color-bg: hsl(10, 21%, 95%);
-		--color-border: hsl(17, 24%, 90%);
-	}
-
-	html {
-		font-family: system-ui, sans-serif;
-		font-size: var(--font-size-base);
-		color: var(--color-text);
-		background-color: var(--color-bg);
-	}
-
-	body {
-		margin: 0;
-	}
-
-
-</style>
-
-<style is:global>
-	h1 {
-		font-size: var(--font-size-xl);
-	}
-
-	h2 {
-		font-size: var(--font-size-lg);
-	}
-
-	code {
-		font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-			Bitstream Vera Sans Mono, Courier New, monospace;
-	}
-</style>

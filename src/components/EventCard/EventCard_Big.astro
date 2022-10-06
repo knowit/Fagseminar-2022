@@ -1,0 +1,30 @@
+---
+export interface Props {
+  title: string;
+  href: string;
+  time: string;
+  duration: string;
+  userName: string;
+}
+
+const { href, title, userName, time, duration } = Astro.props;
+---
+
+<li class="link-card">
+  <a href={href}>
+    <div class="space-x-1 flex justify-between">
+      <p>{time}</p><p>{duration}</p>
+    </div>
+    <img src="/test_selfie.jpg" width="40" class="rounded-full" />
+    <h2>
+      {userName}
+    </h2>
+    <p class="text-ellipsis">
+      {title}
+    </p>
+    <hr class="border-kflamingo border-[1.5px]" />
+  </a>
+</li>
+<style>
+
+</style>

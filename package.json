@@ -10,11 +10,13 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^1.1.5"
+    "astro": "^1.1.5",
+    "date-fns": "^2.29.3"
   },
   "devDependencies": {
     "@astrojs/svelte": "^1.0.0",
     "@astrojs/tailwind": "^1.0.0",
+    "sass": "^1.55.0",
     "svelte": "^3.46.4"
   }
 }

@@ -1,0 +1,81 @@
+---
+import EventCard from "../../components/EventCard/EventCard.astro";
+import Layout from "../../layouts/Layout.astro";
+import type { TimeRecord, TimeSlotInfo } from "../../models/airtable";
+import { getData } from "../../util/fetchUtil";
+import { groupBy } from "../../util/groupUtil";
+
+import { formatDateFromDMY } from "../../util/localeUtil";
+
+export interface Props {
+  day: string;
+  relevantSlots: TimeRecord[];
+}
+
+export async function getStaticPaths() {
+  const data = await getData();
+
+  const dayData = groupBy(data, (v) => v.fields.date);
+
+  return Object.keys(dayData).map((day) => {
+    const timeSlots = dayData[day];
+    console.log(formatDateFromDMY(Number(day), 3, 2022, "EEEE"));
+    return {
+      params: { day: formatDateFromDMY(Number(day), 3, 2022, "EEEE") },
+      props: { day: day, relevantSlots: timeSlots },
+    };
+  });
+}
+
+function firstLetterUppercase(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function getNiceType(type: string): string {
+  switch (type) {
+    case "lightningTalk":
+      return "Lyntale";
+    case "talk":
+      return "Foredrag";
+    case "workshop":
+      return "Workshop";
+    case "discussion":
+      return "Diskusjons gruppe";
+    case "other":
+      return "Other";
+    default:
+      return "";
+  }
+}
+
+const { relevantSlots, day } = Astro.props;
+---
+
+<Layout
+  title={firstLetterUppercase(formatDateFromDMY(Number(day), 3, 2022, "EEEE")) +
+    " - Knowit Fagseminar Roma"}
+  currentPage="Program"
+>
+  <main class="p-1 w-full">
+    <h2 class="text-center text-4xl font-bold">
+      {firstLetterUppercase(formatDateFromDMY(Number(day), 3, 2022, "EEEE d."))}
+    </h2>
+    <ul class="w-1/2 m-auto flex flex-col gap-7">
+      {
+        relevantSlots.map((slot) => {
+          const { fields, id } = slot;
+          return (
+            <EventCard
+              userName={fields.userIds ?? ""}
+              time={fields.start + "-" + fields.end}
+              title={fields.title}
+              duration={fields.duration?.toString()}
+              href={"/program/" + id}
+              summary={typeof fields.userIds === "undefined"}
+            />
+          );
+        })
+      }
+    </ul>
+  </main>
+</Layout>

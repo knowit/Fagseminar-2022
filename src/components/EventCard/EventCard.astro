@@ -1,0 +1,29 @@
+---
+import EventCardBig from "./EventCard_Big.astro";
+import EventCardSmall from "./EventCard_Small.astro";
+
+export interface Props {
+  title: string;
+  href: string;
+  time: string;
+  duration: string;
+  userName: string;
+  summary?: boolean;
+}
+
+const { href, title, userName, time, duration, summary } = Astro.props;
+---
+
+{
+  summary ? (
+    <EventCardSmall time={time} href={href} title={title} />
+  ) : (
+    <EventCardBig
+      time={time}
+      href={href}
+      title={title}
+      duration={duration}
+      userName={userName}
+    />
+  )
+}

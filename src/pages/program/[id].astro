@@ -1,0 +1,74 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import type { TimeRecord, TimeSlotInfo } from "../../models/airtable";
+import { formatDateFromDMY } from "../../util/localeUtil";
+
+export interface Props {
+  slotInfo: TimeSlotInfo;
+}
+
+export async function getStaticPaths() {
+  const data = await getData();
+
+  return data.map((timeSlot) => {
+    const fields = timeSlot.fields;
+    return {
+      params: { id: timeSlot.id },
+      props: { slotInfo: fields },
+    };
+  });
+}
+
+function getNiceType(type: string): string {
+  switch (type) {
+    case "lightningTalk":
+      return "Lyntale";
+    case "talk":
+      return "Foredrag";
+    case "workshop":
+      return "Workshop";
+    case "discussion":
+      return "Diskusjons gruppe";
+    case "other":
+      return "Other";
+    default:
+      return "";
+  }
+}
+
+function getDateString(day: string) {
+  return formatDateFromDMY(Number(day), 3, 2022, "EEEE dd");
+}
+
+function getSubtitleString(slot: TimeSlotInfo) {
+  return `${getNiceType(slot.type)} - ${slot.duration} | kl. ${
+    slot.start
+  } ${getDateString(slot.date)} | Rom: ${slot.room}`;
+}
+
+const { slotInfo } = Astro.props;
+---
+
+<Layout
+  title={slotInfo.title + " - Knowit Fagseminar Roma"}
+  currentPage="Program"
+>
+  <main class="p-1 w-full">
+    <div class="m-auto content-center align-middle max-w-fit border-2">
+      <div class="w-full">
+        <h2>{slotInfo.title}</h2>
+        <span>{getSubtitleString(slotInfo)}</span>
+      </div>
+      <div class="m-auto max-w-3xl flex justify-between">
+        <div class="max-w-prose">
+          <p>{slotInfo.description}</p>
+        </div>
+        <div>
+          <img src="/test_selfie.jpg" width="50px" />
+          <h3>{slotInfo.userIds}</h3>
+          <p>{slotInfo.speakerBio}</p>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>

@@ -1,0 +1,34 @@
+---
+import EventCard from "../components/EventCard/EventCard.astro";
+import Layout from "../layouts/Layout.astro";
+import type { TimeRecord } from "../models/airtable";
+import { getData } from "../util/fetchUtil";
+
+const data = await getData();
+---
+
+<Layout title="Knowit Fagseminar Roma 2022" currentPage="Program">
+  <main>
+    <h2 class="text-center">Program</h2>
+    <ul class="w-1/2 m-auto flex flex-col gap-7">
+      {
+        data.map((slot) => {
+          return (
+            <EventCard
+              userName={slot.fields.userIds ?? ""}
+              time={slot.fields.start + "-" + slot.fields.end}
+              title={slot.fields.title}
+              duration={slot.fields.duration?.toString()}
+              href={"/program/" + slot.id}
+              summary={typeof slot.fields.userIds === "undefined"}
+            />
+          );
+        })
+      }
+    </ul>
+  </main>
+</Layout>
+
+<style>
+
+</style>
