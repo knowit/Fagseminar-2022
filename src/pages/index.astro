@@ -4,14 +4,17 @@ import Layout from "../layouts/Layout.astro";
 
 <Layout title="Knowit Fagseminar Roma 2022" currentPage="Home">
   <main>
-    <h2>HOME</h2>
+    <img src="" class="w-full h-10 mx-auto" />
+    <h2>Program 20-23 October 2022</h2>
   </main>
 </Layout>
 
-<style lang="scss" is:global>
-
-</style>
-
 <style>
+  @tailwind base;
 
+  @layer base {
+    h2 {
+      @apply font-bold text-5xl mx-auto w-fit;
+    }
+  }
 </style>

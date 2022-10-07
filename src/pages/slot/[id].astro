@@ -1,7 +1,8 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import type { TimeRecord, TimeSlotInfo } from "../../models/airtable";
-import { formatDateFromDMY } from "../../util/localeUtil";
+import { getData } from "../../util/fetchUtil";
+import { formatDate } from "../../util/localeUtil";
 
 export interface Props {
   slotInfo: TimeSlotInfo;
@@ -36,8 +37,8 @@ function getNiceType(type: string): string {
   }
 }
 
-function getDateString(day: string) {
-  return formatDateFromDMY(Number(day), 3, 2022, "EEEE dd");
+function getDateString(date: string) {
+  return formatDate(date, "EEEE dd");
 }
 
 function getSubtitleString(slot: TimeSlotInfo) {

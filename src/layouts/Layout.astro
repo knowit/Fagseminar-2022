@@ -6,8 +6,8 @@ export interface Props {
 
 const { title, currentPage } = Astro.props;
 
-const linkNotSelected = "block";
-const linkSelected = "block selectedPage";
+const linkNotSelected = "navLink";
+const linkSelected = "navLink selectedPage";
 ---
 
 <!DOCTYPE html>
@@ -20,21 +20,35 @@ const linkSelected = "block selectedPage";
     <title>{title}</title>
   </head>
   <body class="w-11/12 mx-auto">
-    <header class="w-full text-center">
-      <hr class="border-[3px] text-kleather" />
-      <section class="flex justify-between my-auto py-3">
-        <h1 class="font-bold">Knowit Fagseminar Roma</h1>
-        <nav class="flex min-w-max justify-evenly border">
-          <a
-            class={currentPage === "Home" ? linkSelected : linkNotSelected}
-            href="/">Home</a
-          >
-          <a
-            class={currentPage === "Program" ? linkSelected : linkNotSelected}
-            href="/program">Program</a
-          >
-        </nav>
-      </section>
+    <hr class="border-[4px] text-kflamingo" />
+    <header class="w-full text-center flex justify-between my-auto py-3">
+      <h1 class="font-bold text-2xl">
+        <a href="/Fagseminar-2022/">Romafagseminar 2022</a>
+      </h1>
+      <nav>
+        <ul>
+          <li>
+            <a
+              class={currentPage === "Home" ? linkSelected : linkNotSelected}
+              href="/Fagseminar-2022/">Home</a
+            >
+          </li>
+          <li>
+            <a
+              class={currentPage === "Program" ? linkSelected : linkNotSelected}
+              href="/Fagseminar-2022/program">Program</a
+            >
+          </li>
+          <li>
+            <a
+              class={currentPage === "Favoritter"
+                ? linkSelected
+                : linkNotSelected}
+              href="/Fagseminar-2022/favorites">Favoritter</a
+            >
+          </li>
+        </ul>
+      </nav>
     </header>
     <slot />
 
@@ -57,6 +71,17 @@ const linkSelected = "block selectedPage";
       }
     </style>
     <style>
+      ul {
+        @apply flex flex-row items-start gap-9;
+      }
+      li {
+        @apply inline-block;
+      }
+
+      .navLink,
+      .selectedPage {
+        @apply block px-2 py-2;
+      }
       .selectedPage {
         @apply font-bold border-b-[3px] border-b-kblack;
       }

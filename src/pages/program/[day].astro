@@ -5,24 +5,31 @@ import type { TimeRecord, TimeSlotInfo } from "../../models/airtable";
 import { getData } from "../../util/fetchUtil";
 import { groupBy } from "../../util/groupUtil";
 
-import { formatDateFromDMY } from "../../util/localeUtil";
+import { formatDate } from "../../util/localeUtil";
 
 export interface Props {
-  day: string;
+  date: string;
   relevantSlots: TimeRecord[];
+  previousDate?: string;
+  nextDate?: string;
 }
 
 export async function getStaticPaths() {
   const data = await getData();
 
   const dayData = groupBy(data, (v) => v.fields.date);
+  const dayKeys = Object.keys(dayData);
 
-  return Object.keys(dayData).map((day) => {
-    const timeSlots = dayData[day];
-    console.log(formatDateFromDMY(Number(day), 3, 2022, "EEEE"));
+  return dayKeys.map((date, index) => {
+    const timeSlots = dayData[date];
     return {
-      params: { day: formatDateFromDMY(Number(day), 3, 2022, "EEEE") },
-      props: { day: day, relevantSlots: timeSlots },
+      params: { day: formatDate(date, "EEEE") },
+      props: {
+        date: date,
+        relevantSlots: timeSlots,
+        previousDate: dayKeys[index - 1],
+        nextDate: dayKeys[index + 1],
+      },
     };
   });
 }
@@ -48,18 +55,29 @@ function getNiceType(type: string): string {
   }
 }
 
-const { relevantSlots, day } = Astro.props;
+const { relevantSlots, date, previousDate, nextDate } = Astro.props;
 ---
 
 <Layout
-  title={firstLetterUppercase(formatDateFromDMY(Number(day), 3, 2022, "EEEE")) +
+  title={firstLetterUppercase(formatDate(date, "EEEE")) +
     " - Knowit Fagseminar Roma"}
   currentPage="Program"
 >
   <main class="p-1 w-full">
-    <h2 class="text-center text-4xl font-bold">
-      {firstLetterUppercase(formatDateFromDMY(Number(day), 3, 2022, "EEEE d."))}
-    </h2>
+    <section class="flex flex-row items-center justify-center gap-5">
+      <a
+        class={`caret  ${previousDate != null ? "left" : ""}`}
+        href={previousDate != null
+          ? `/Fagseminar-2022/program/${formatDate(previousDate, "EEEE")}`
+          : ""}></a><h2 class="text-center text-4xl font-bold block w-52">
+        {firstLetterUppercase(formatDate(date, "EEEE d"))}
+      </h2><a
+        class={`caret  ${nextDate != null ? "right" : ""}`}
+        href={nextDate != null
+          ? `/Fagseminar-2022/program/${formatDate(nextDate, "EEEE")}`
+          : ""}></a>
+    </section>
+
     <ul class="w-1/2 m-auto flex flex-col gap-7">
       {
         relevantSlots.map((slot) => {
@@ -70,7 +88,7 @@ const { relevantSlots, day } = Astro.props;
               time={fields.start + "-" + fields.end}
               title={fields.title}
               duration={fields.duration?.toString()}
-              href={"/program/" + id}
+              href={"/Fagseminar-2022/slot/" + id}
               summary={typeof fields.userIds === "undefined"}
             />
           );
@@ -79,3 +97,19 @@ const { relevantSlots, day } = Astro.props;
     </ul>
   </main>
 </Layout>
+
+<style>
+  .caret {
+    width: 0;
+    height: 0;
+    display: block;
+    border: 10px solid transparent;
+  }
+
+  .caret.right {
+    border-left-color: black;
+  }
+  .caret.left {
+    border-right-color: black;
+  }
+</style>

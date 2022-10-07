@@ -19,7 +19,7 @@ const data = await getData();
               time={slot.fields.start + "-" + slot.fields.end}
               title={slot.fields.title}
               duration={slot.fields.duration?.toString()}
-              href={"/program/" + slot.id}
+              href={"/Fagseminar-2022/slot/" + slot.id}
               summary={typeof slot.fields.userIds === "undefined"}
             />
           );

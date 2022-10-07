@@ -1,19 +1,13 @@
 export interface TimeSlotInfo {
-  id: string;
   start: string;
-  speakerFavourites?: string;
   title: string;
   room: string;
-  speakerImage?: {
-    id: string;
-    url: string;
-    filename: string;
-    size: number;
-    type: string;
-  }[];
   description?: string;
+  copresenters?: string;
+  workshopMax?: number;
+  language: string;
   speakerBio?: string;
-  speakerRecreation?: string;
+  speakerCompany: string;
   duration: number;
   end: string;
   date: string;
@@ -22,6 +16,7 @@ export interface TimeSlotInfo {
   speakerImageUrl?: string;
   email?: string;
   type: string;
+  requiredKnowledge?: string;
 }
 
 export interface TimeRecord {
