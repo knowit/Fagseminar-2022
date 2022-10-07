@@ -34,6 +34,7 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+      AIRTABLE_APIKEY: ${{secrets.AIRTABLE_APIKEY}}
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
