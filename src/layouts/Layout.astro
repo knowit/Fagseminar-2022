@@ -11,7 +11,7 @@ const linkSelected = "navLink selectedPage";
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -19,13 +19,13 @@ const linkSelected = "navLink selectedPage";
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body class="w-11/12 mx-auto">
-    <hr class="border-[4px] text-kflamingo" />
-    <header class="w-full text-center flex justify-between my-auto py-3">
-      <h1 class="font-bold text-2xl">
-        <a href="/Fagseminar-2022/">Romafagseminar 2022</a>
-      </h1>
-      <nav>
+  <body class="w-11/12 mx-auto h-full flex flex-col justify-between">
+    <header>
+      <hr class="border-[4px] text-kflamingo" />
+      <nav class="w-full text-center flex justify-between my-auto py-3">
+        <h1 class="font-bold text-2xl">
+          <a href="/Fagseminar-2022/">Romafagseminar 2022</a>
+        </h1>
         <ul>
           <li>
             <a
@@ -49,8 +49,18 @@ const linkSelected = "navLink selectedPage";
           </li>
         </ul>
       </nav>
+      <div class="w-11/12 h-24 text-center bg-[yellow]">
+        LOGO FOR EVENT PLACEHOLDER
+      </div>
     </header>
     <slot />
+
+    <footer class="bg-kleather w-full p-4 mb-10">
+      <h3 class="text-2xl font-bold text-kmint mb-3">Stay Informed</h3>
+      <p class="text-[white]">
+        We are available on our slack channel #fagseminarroma
+      </p>
+    </footer>
 
     <style is:global>
       @tailwind base;

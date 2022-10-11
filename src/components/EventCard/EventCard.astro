@@ -3,6 +3,7 @@ import EventCardBig from "./EventCard_Big.astro";
 import EventCardSmall from "./EventCard_Small.astro";
 
 export interface Props {
+  id: string;
   title: string;
   href: string;
   time: string;
@@ -11,7 +12,7 @@ export interface Props {
   summary?: boolean;
 }
 
-const { href, title, userName, time, duration, summary } = Astro.props;
+const { id, href, title, userName, time, duration, summary } = Astro.props;
 ---
 
 {
@@ -19,6 +20,7 @@ const { href, title, userName, time, duration, summary } = Astro.props;
     <EventCardSmall time={time} href={href} title={title} />
   ) : (
     <EventCardBig
+      id={id}
       time={time}
       href={href}
       title={title}

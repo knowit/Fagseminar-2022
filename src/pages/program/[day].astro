@@ -1,7 +1,7 @@
 ---
 import EventCard from "../../components/EventCard/EventCard.astro";
 import Layout from "../../layouts/Layout.astro";
-import type { TimeRecord, TimeSlotInfo } from "../../models/airtable";
+import type { TimeRecord } from "../../models/airtable";
 import { getData } from "../../util/fetchUtil";
 import { groupBy } from "../../util/groupUtil";
 
@@ -84,6 +84,7 @@ const { relevantSlots, date, previousDate, nextDate } = Astro.props;
           const { fields, id } = slot;
           return (
             <EventCard
+              id={id}
               userName={fields.userIds ?? ""}
               time={fields.start + "-" + fields.end}
               title={fields.title}

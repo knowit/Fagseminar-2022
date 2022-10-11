@@ -3,19 +3,24 @@ import Layout from "../../layouts/Layout.astro";
 import type { TimeRecord, TimeSlotInfo } from "../../models/airtable";
 import { getData } from "../../util/fetchUtil";
 import { formatDate } from "../../util/localeUtil";
-
+import speakerPhotosJson from "../../json/speaker_photos.json";
 export interface Props {
   slotInfo: TimeSlotInfo;
+  photoKeys: { photoName: String; googleId: String; apiID: String };
 }
 
 export async function getStaticPaths() {
   const data = await getData();
 
   return data.map((timeSlot) => {
+    const speakerPhoto = speakerPhotosJson.find(
+      (photo) => photo.apiID === timeSlot.id
+    );
+
     const fields = timeSlot.fields;
     return {
       params: { id: timeSlot.id },
-      props: { slotInfo: fields },
+      props: { slotInfo: fields, photoKeys: speakerPhoto },
     };
   });
 }
@@ -47,29 +52,68 @@ function getSubtitleString(slot: TimeSlotInfo) {
   } ${getDateString(slot.date)} | Rom: ${slot.room}`;
 }
 
-const { slotInfo } = Astro.props;
+function getRoomName(room: string) {
+  switch (room) {
+    case "SDP":
+      return "Salone dei Papi";
+    case "SLO":
+      return "Sala Lambertini + Odescalchi";
+    case "SOA":
+      return "Sala Ottoboni + Aldobrandini";
+    case "SPDR":
+      return "Sala Piccolomini + Della Rovere";
+    case "SC":
+      return "Sala Chigi";
+    default:
+      return "";
+  }
+}
+
+const { slotInfo, photoKeys } = Astro.props;
 ---
 
 <Layout
   title={slotInfo.title + " - Knowit Fagseminar Roma"}
   currentPage="Program"
 >
-  <main class="p-1 w-full">
-    <div class="m-auto content-center align-middle max-w-fit border-2">
-      <div class="w-full">
-        <h2>{slotInfo.title}</h2>
-        <span>{getSubtitleString(slotInfo)}</span>
-      </div>
-      <div class="m-auto max-w-3xl flex justify-between">
-        <div class="max-w-prose">
-          <p>{slotInfo.description}</p>
-        </div>
-        <div>
-          <img src="/test_selfie.jpg" width="50px" />
-          <h3>{slotInfo.userIds}</h3>
-          <p>{slotInfo.speakerBio}</p>
-        </div>
+  <main class="w-full h-full pt-14">
+    <div class="gap-y-8 max-w-fit items-center flex flex-col w-4/5 m-auto">
+      <h2 class="block text-5xl font-bold w-full">{slotInfo.title}</h2>
+      <h3 class="text-2xl h-fit text-ellipsis w-full">
+        {getNiceType(slotInfo.type)} - <strong>{slotInfo.duration}</strong>
+        kl. {slotInfo.start}
+        <strong>{getDateString(slotInfo.date)}</strong>
+        Rom: <strong>{getRoomName(slotInfo.room)}</strong>
+      </h3>
+
+      <p class="text-lg">{slotInfo.description}</p>
+
+      <div class="flex gap-x-6 w-full">
+        <section class="flex flex-col justify-center items-center gap-y-1">
+          <div
+            class="max-w-2xl rounded-2xl inline-block relative overflow-hidden w-fit max-h-60"
+          >
+            <img
+              src={`/pictures/${photoKeys.photoName}`}
+              alt=""
+              class="max-w-xl w-60"
+            />
+          </div>
+          <h4 class="font-semibold text-lg">{slotInfo.userIds}</h4>
+          <p>{slotInfo.email}</p>
+        </section>
+        <p class="my-auto">{slotInfo.speaker_bio}</p>
       </div>
     </div>
   </main>
 </Layout>
+
+<style>
+  strong {
+    @apply font-semibold;
+  }
+
+  p {
+    @apply text-lg;
+  }
+</style>

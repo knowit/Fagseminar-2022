@@ -1,7 +1,6 @@
 ---
 import EventCard from "../components/EventCard/EventCard.astro";
 import Layout from "../layouts/Layout.astro";
-import type { TimeRecord } from "../models/airtable";
 import { getData } from "../util/fetchUtil";
 
 const data = await getData();
@@ -15,6 +14,7 @@ const data = await getData();
         data.map((slot) => {
           return (
             <EventCard
+              id={slot.id}
               userName={slot.fields.userIds ?? ""}
               time={slot.fields.start + "-" + slot.fields.end}
               title={slot.fields.title}

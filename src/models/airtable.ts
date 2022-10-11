@@ -6,17 +6,17 @@ export interface TimeSlotInfo {
   copresenters?: string;
   workshopMax?: number;
   language: string;
-  speakerBio?: string;
-  speakerCompany: string;
+  speaker_bio?: string;
+  speaker_company: string;
   duration: number;
   end: string;
   date: string;
   userIds?: string;
-  speakerConsent?: boolean;
-  speakerImageUrl?: string;
+  speaker_consent?: boolean;
+  speaker_image_url?: string;
   email?: string;
   type: string;
-  requiredKnowledge?: string;
+  required_knowledge?: string;
 }
 
 export interface TimeRecord {
