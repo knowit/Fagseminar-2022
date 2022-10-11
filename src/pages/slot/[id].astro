@@ -76,7 +76,7 @@ const { slotInfo, photoKeys } = Astro.props;
   title={slotInfo.title + " - Knowit Fagseminar Roma"}
   currentPage="Program"
 >
-  <main class="w-full h-full pt-14">
+  <main class="w-full h-full pt-14 m-auto">
     <div class="gap-y-8 max-w-fit items-center flex flex-col w-4/5 m-auto">
       <h2 class="block text-5xl font-bold w-full">{slotInfo.title}</h2>
       <h3 class="text-2xl h-fit text-ellipsis w-full">
@@ -94,7 +94,7 @@ const { slotInfo, photoKeys } = Astro.props;
             class="max-w-2xl rounded-2xl inline-block relative overflow-hidden w-fit max-h-60"
           >
             <img
-              src={`/pictures/${photoKeys.photoName}`}
+              src={`Fagseminar-2022/pictures/${photoKeys.photoName}`}
               alt=""
               class="max-w-xl w-60"
             />

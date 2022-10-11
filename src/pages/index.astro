@@ -5,9 +5,49 @@ import Layout from "../layouts/Layout.astro";
 
 <Layout title="Knowit Fagseminar Roma 2022" currentPage="Home">
   <main>
-    <FavoriteButton client:visible id="" />
     <img src="" class="w-full h-10 mx-auto" />
-    <h2>Program 20-23 October 2022</h2>
+    <section class="w-full text-center">
+      <h2 class="block text-5xl font-bold w-full text-center">
+        Program 20-23 October 2022
+      </h2>
+      <p class="w-2/3 text-center mx-auto">
+        Knowit Objectnet loren isun sit amet, loren isun sit ametloren isun sit
+        ametloren isun sit ametloren isun sit ametloren isun sit ametloren isun
+        sit ametloren isun sit ametloren isun sit ametloren isun sit ametloren
+        isun sit ame.
+      </p>
+    </section>
+
+    <div>
+      <section>
+        <ul>
+          <li>text text text</li><li>text text text</li><li>
+            text text text
+          </li><li>text text text</li>
+        </ul>
+      </section>
+      <section>
+        <ul>
+          <li>text text text</li><li>text text text</li><li>
+            text text text
+          </li><li>text text text</li>
+        </ul>
+      </section>
+      <section>
+        <ul>
+          <li>text text text</li><li>text text text</li><li>
+            text text text
+          </li><li>text text text</li>
+        </ul>
+      </section>
+      <section>
+        <ul>
+          <li>text text text</li><li>text text text</li><li>
+            text text text
+          </li><li>text text text</li>
+        </ul>
+      </section>
+    </div>
   </main>
 </Layout>
 
@@ -18,5 +58,9 @@ import Layout from "../layouts/Layout.astro";
     h2 {
       @apply font-bold text-5xl mx-auto w-fit;
     }
+  }
+
+  #logo {
+    @apply h-96;
   }
 </style>
