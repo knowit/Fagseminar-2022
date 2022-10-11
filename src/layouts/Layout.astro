@@ -2,16 +2,17 @@
 export interface Props {
   title: string;
   currentPage: "Home" | "Program" | "Favoritter";
+  fullLogo?: boolean;
 }
 
-const { title, currentPage } = Astro.props;
+const { title, currentPage, fullLogo } = Astro.props;
 
 const linkNotSelected = "navLink";
 const linkSelected = "navLink selectedPage";
 ---
 
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -19,7 +20,7 @@ const linkSelected = "navLink selectedPage";
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body class="w-11/12 mx-auto h-full flex flex-col justify-between">
+  <body class="w-11/12 mx-auto min-h-screen flex flex-col justify-between">
     <header>
       <hr class="border-[4px] text-kflamingo" />
       <nav class="w-full text-center flex justify-between my-auto py-3">
@@ -49,17 +50,27 @@ const linkSelected = "navLink selectedPage";
           </li>
         </ul>
       </nav>
-      <div id="logo" class="w-11/12 h-24 text-center bg-[yellow]">
-        LOGO FOR EVENT PLACEHOLDER
-      </div>
+      {
+        fullLogo ? (
+          <div id="logo" class="w-full h-64 text-center mx-auto bg-[yellow]">
+            LOGO FOR EVENT PLACEHOLDER{console.log("Got here")}
+          </div>
+        ) : (
+          <div id="logo" class="w-11/12 h-24 text-center mx-auto bg-[yellow]">
+            LOGO FOR EVENT PLACEHOLDER
+          </div>
+        )
+      }
     </header>
     <slot />
 
-    <footer class="bg-kleather w-full p-4 mb-10">
-      <h3 class="text-2xl font-bold text-kmint mb-3">Stay Informed</h3>
-      <p class="text-[white]">
-        We are available on our slack channel #fagseminarroma
-      </p>
+    <footer class="w-full py-4 mt-auto">
+      <section class="mt-auto p-4 bg-kleather">
+        <h3 class="text-2xl font-bold text-kmint mb-3">Stay Informed</h3>
+        <p class="text-[white]">
+          We are available on our slack channel #fagseminarroma
+        </p>
+      </section>
     </footer>
 
     <style is:global>
@@ -72,10 +83,10 @@ const linkSelected = "navLink selectedPage";
           font-family: Arial, normal;
         }
         body {
-          @apply bg-ksand;
+          @apply bg-ksand max-w-screen-xl;
         }
         main {
-          @apply w-full h-full pt-14 m-auto;
+          @apply w-full h-5/6 pt-14 pb-6;
         }
       }
 
