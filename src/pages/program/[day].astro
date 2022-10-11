@@ -5,6 +5,9 @@ import type { TimeRecord } from "../../models/airtable";
 import { getData } from "../../util/fetchUtil";
 import { groupBy } from "../../util/groupUtil";
 
+import format from "date-fns/format/index.js";
+import en from "date-fns/locale/en-GB/index.js";
+
 import { formatDate } from "../../util/localeUtil";
 
 export interface Props {
@@ -23,7 +26,9 @@ export async function getStaticPaths() {
   return dayKeys.map((date, index) => {
     const timeSlots = dayData[date];
     return {
-      params: { day: formatDate(date, "EEEE") },
+      params: {
+        day: format(new Date(date), "EEEE", { locale: en }).toLowerCase(),
+      },
       props: {
         date: date,
         relevantSlots: timeSlots,
@@ -68,13 +73,17 @@ const { relevantSlots, date, previousDate, nextDate } = Astro.props;
       <a
         class={`caret  ${previousDate != null ? "left" : ""}`}
         href={previousDate != null
-          ? `/Fagseminar-2022/program/${formatDate(previousDate, "EEEE")}`
+          ? `/Fagseminar-2022/program/${format(new Date(previousDate), "EEEE", {
+              locale: en,
+            }).toLowerCase()}`
           : ""}></a><h2 class="text-center text-4xl font-bold block w-52">
         {firstLetterUppercase(formatDate(date, "EEEE d"))}
       </h2><a
         class={`caret  ${nextDate != null ? "right" : ""}`}
         href={nextDate != null
-          ? `/Fagseminar-2022/program/${formatDate(nextDate, "EEEE")}`
+          ? `/Fagseminar-2022/program/${format(new Date(nextDate), "EEEE", {
+              locale: en,
+            }).toLowerCase()}`
           : ""}></a>
     </section>
 

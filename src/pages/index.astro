@@ -4,7 +4,7 @@ import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="Knowit Fagseminar Roma 2022" currentPage="Home" fullLogo={true}>
-  <main class="flex flex-col gap-y-6">
+  <main class="flex flex-col gap-y-6 pt-12">
     <section class="w-full text-center">
       <h2 class="block text-5xl font-bold w-full text-center mb-3">
         Program 20-23 October 2022
@@ -23,93 +23,93 @@ import Layout from "../layouts/Layout.astro";
     <h3 class="text-center text-3xl font-bold mt-4">Agenda</h3>
 
     <div>
-      <section>
+      <a>
         <h1>Thursday 20</h1>
         <ul>
           <li>
+            <time datetime="2022-10-20T15:00:00">15:00</time>
+            <strong>Hotellet åpner for innsjekk</strong>
+          </li>
+          <li>
             <time datetime="2022-10-20T18:00:00">18:00</time>
-            <strong> Charter til Roma</strong>
+            <strong>Avreise fra Gardermoen</strong>
           </li>
           <li>
-            <time datetime="2022-10-20T08:30:00">08:30</time>
-            <strong>Buss to plane</strong>
+            <time datetime="2022-10-20T21:20:00">21:20</time>
+            <strong>Ankomst til Roma</strong>
           </li>
           <li>
-            <time datetime="2022-10-20T08:30:00">08:30</time>
-            <strong>Buss to plane</strong>
-          </li>
-          <li>
-            <time datetime="">Free Time</time>
-            <strong>Drinks at the bar</strong>
+            <time datetime="2022-10-22:45:00">22:45</time>
+            <strong>Innsjekk på hotellet</strong>
           </li>
         </ul>
-      </section>
-      <section>
+      </a>
+      <a href="/Fagseminar-2022/program/friday">
         <h1>Friday 21</h1>
 
         <ul>
           <li>
-            <time datetime="2022-10-21T08:30:00">08:30</time>
+            <time datetime="2022-10-21T08:30:00">07:00</time>
             <strong>Frokost</strong>
           </li>
           <li>
-            <time datetime="2022-10-21T09:00:00">09:00</time>
-            <strong>Fag</strong>
+            <time datetime="2022-10-21T09:00:00">09:00 - 10:00</time>
+            <strong>Internmøte</strong>
           </li>
           <li>
-            <time datetime="2022-10-21T08:30:00">8.30</time>
-            <strong>Buss to plane</strong>
+            <time datetime="2022-10-21T10:15:00">10:15 - 17:00</time>
+            <strong>Fagseminar</strong>
           </li>
           <li>
-            <time datetime="2022-10-21T08:30:00">8.30</time>
-            <strong>Buss to plane</strong>
+            <time datetime="2022-10-21T20:00:00">20.00</time>
+            <strong>Middag på resturanter</strong>
           </li>
         </ul>
-      </section>
-      <section>
+      </a>
+      <a href="">
         <h1>Saturday 22</h1>
 
         <ul>
           <li>
-            <time datetime="2022-10-20T08:30:00">8.30</time>
-            <strong>Buss to plane</strong>
+            <time datetime="2022-10-22T08:30:00">07.00</time>
+            <strong>Frokost</strong>
           </li>
           <li>
-            <time datetime="2022-10-20T08:30:00">8.30</time>
-            <strong>Buss to plane</strong>
+            <time datetime="2022-10-22T08:30:00">09:00</time>
+            <strong>Aktiviteter</strong>
           </li>
           <li>
-            <time datetime="2022-10-20T08:30:00">8.30</time>
-            <strong>Buss to plane</strong>
+            <time datetime="2022-10-22T08:30:00">18:30</time>
+            <strong>Transfer til Vingården</strong>
           </li>
           <li>
-            <time datetime="2022-10-20T08:30:00">8.30</time>
-            <strong>Buss to plane</strong>
+            <time datetime="2022-10-22T08:30:00">19:30</time>
+            <strong>Middag på Vingård</strong>
           </li>
         </ul>
-      </section>
-      <section>
+      </a>
+      <a href="/Fagseminar-2022/program/sunday">
         <h1>Sunday 23</h1>
 
         <ul>
           <li>
-            <time datetime="2022-10-20T08:30:00">8.30</time>
-            <strong>Buss to plane</strong>
+            <time datetime="2022-10-20T08:30:00">07:00</time>
+            <strong>Frokost</strong>
           </li>
           <li>
-            <time datetime="2022-10-20T08:30:00">8.30</time>
-            <strong>Buss to plane</strong>
+            <time datetime="2022-10-20T08:30:00">09:00</time>
+            <strong>Fagseminar</strong>
           </li>
           <li>
-            <time datetime="2022-10-20T08:30:00">8.30</time>
-            <strong>Buss to plane</strong>
+            <time datetime="2022-10-20T08:30:00">13:50</time>
+            <strong>Transfer til flyplassen</strong>
           </li>
           <li>
-            <time datetime="2022-10-20T08:30:00">8.30</time>
-            <strong>Buss to plane</strong>
+            <time datetime="2022-10-20T08:30:00">17:00</time>
+            <strong>Avreise fra Roma</strong>
           </li>
         </ul>
-      </section>
+      </a>
     </div>
   </main>
 </Layout>
@@ -124,18 +124,18 @@ import Layout from "../layouts/Layout.astro";
   }
 
   div {
-    @apply flex w-full h-fit flex-wrap;
+    @apply grid w-full h-fit grid-cols-4;
   }
 
-  div section {
-    @apply w-1/4 min-w-fit px-8  border-2 border-transparent h-full py-4 hover:border-klollipop;
+  div a {
+    @apply w-full px-8  border-2 border-transparent h-full py-4 hover:border-klollipop;
   }
 
-  section h1 {
+  a h1 {
     @apply text-kleather font-bold text-2xl py-2 px-1;
   }
 
-  section ul {
+  a ul {
     @apply flex flex-col border-t-4 border-t-kleather;
   }
 
@@ -144,14 +144,14 @@ import Layout from "../layouts/Layout.astro";
   }
 
   li strong {
-    @apply block pt-1;
+    @apply block pt-1 text-ellipsis;
   }
 
-  section:hover ul {
+  a:hover ul {
     @apply border-t-klollipop;
   }
 
-  section:hover ul li:not(:first-child) {
+  a:hover ul li:not(:first-child) {
     @apply border-t-klollipop;
   }
 
