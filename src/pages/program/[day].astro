@@ -1,5 +1,5 @@
 ---
-import EventCard from "../../components/EventCard/EventCard.astro";
+import EventCard from "../../components/EventCard/EventCard.svelte";
 import Layout from "../../layouts/Layout.astro";
 import type { TimeRecord } from "../../models/airtable";
 import { getData } from "../../util/fetchUtil";
@@ -7,17 +7,37 @@ import { groupBy } from "../../util/groupUtil";
 
 import format from "date-fns/format/index.js";
 import en from "date-fns/locale/en-GB/index.js";
+import speakerPhotosJson from "../../json/speaker_photos.json";
 
 import { formatDate } from "../../util/localeUtil";
+import EventCardHeader from "../../components/EventCard/EventCardHeader.svelte";
+import { Icon } from "astro-icon";
+
+import { Debug } from "astro/components";
+import { getRoomName } from "../../util/roomUtil";
 
 export interface Props {
   date: string;
   relevantSlots: TimeRecord[];
   previousDate?: string;
   nextDate?: string;
+  startTimes: string[];
+  rooms: string[];
 }
 
 export async function getStaticPaths() {
+  function uniqueFilter(value: any, index: any, self: any[]) {
+    return self.indexOf(value) === index;
+  }
+
+  function applicableRooms(slots: TimeRecord[]) {
+    return slots.map((value) => value.fields.room).filter(uniqueFilter);
+  }
+
+  function applicableStartTimes(slots: TimeRecord[]) {
+    return slots.map((value) => value.fields.start).filter(uniqueFilter);
+  }
+
   const data = await getData();
 
   const dayData = groupBy(data, (v) => v.fields.date);
@@ -34,6 +54,8 @@ export async function getStaticPaths() {
         relevantSlots: timeSlots,
         previousDate: dayKeys[index - 1],
         nextDate: dayKeys[index + 1],
+        startTimes: applicableStartTimes(timeSlots),
+        rooms: applicableRooms(timeSlots),
       },
     };
   });
@@ -60,7 +82,23 @@ function getNiceType(type: string): string {
   }
 }
 
-const { relevantSlots, date, previousDate, nextDate } = Astro.props;
+function getRowAndCol(slot: TimeRecord, startTimes: string[], rooms: string[]) {
+  return [
+    rooms.findIndex((value) => slot.fields.room === value) + 1,
+    startTimes.findIndex((value) => slot.fields.start === value) + 2,
+  ];
+}
+
+function getImageUrl(slot: TimeRecord) {
+  const speakerPhoto = speakerPhotosJson.find(
+    (photo) => photo.apiID === slot.id
+  );
+
+  return speakerPhoto != null ? speakerPhoto.photoName : "";
+}
+
+const { relevantSlots, date, previousDate, nextDate, startTimes, rooms } =
+  Astro.props;
 ---
 
 <Layout
@@ -68,58 +106,115 @@ const { relevantSlots, date, previousDate, nextDate } = Astro.props;
     " - Knowit Fagseminar Roma"}
   currentPage="Program"
 >
-  <main class="w-full h-full pt-14 m-auto">
-    <section class="flex flex-row items-center justify-center gap-5">
-      <a
-        class={`caret  ${previousDate != null ? "left" : ""}`}
-        href={previousDate != null
-          ? `/Fagseminar-2022/program/${format(new Date(previousDate), "EEEE", {
-              locale: en,
-            }).toLowerCase()}`
-          : ""}></a><h2 class="text-center text-4xl font-bold block w-52">
-        {firstLetterUppercase(formatDate(date, "EEEE d"))}
-      </h2><a
-        class={`caret  ${nextDate != null ? "right" : ""}`}
-        href={nextDate != null
-          ? `/Fagseminar-2022/program/${format(new Date(nextDate), "EEEE", {
-              locale: en,
-            }).toLowerCase()}`
-          : ""}></a>
+  <main class="min-h-full w-11/12 pt-14 m-auto">
+    <section class="flex gap-x-9 items-center w-full pb-10">
+      <div class="flex flex-row items-center w-fit gap-5">
+        <a
+          class={`caret  ${previousDate != null ? "" : "pointer-events-none"} `}
+          href={previousDate != null
+            ? `/Fagseminar-2022/program/${format(
+                new Date(previousDate),
+                "EEEE",
+                {
+                  locale: en,
+                }
+              ).toLowerCase()}`
+            : ""}
+        >
+          <Icon
+            pack="ant-design"
+            name="caret-left-filled"
+            class={previousDate != null ? "" : "hidden"}
+          />
+        </a>
+        <h2 class="text-center text-5xl font-bold block w-60">
+          {firstLetterUppercase(formatDate(date, "EEEE d"))}
+        </h2>
+        <a
+          class={`caret  ${nextDate != null ? "" : "pointer-events-none"}`}
+          href={nextDate != null
+            ? `/Fagseminar-2022/program/${format(new Date(nextDate), "EEEE", {
+                locale: en,
+              }).toLowerCase()}`
+            : ""}
+        >
+          <Icon
+            pack="ant-design"
+            name="caret-right-filled"
+            class={nextDate != null ? "" : "hidden"}
+          />
+        </a>
+      </div>
+      <p class="h-fit">
+        Knowit Objectnet loren isun sit amet, loren isun sit ametloren isun sit
+        ametloren isun sit ametloren isun sit ametlor oren isun sit ametloren
+        isun sit ametloren isun.
+      </p>
     </section>
 
-    <ul class="w-1/2 m-auto flex flex-col gap-7">
-      {
-        relevantSlots.map((slot) => {
-          const { fields, id } = slot;
-          return (
-            <EventCard
-              id={id}
-              userName={fields.userIds ?? ""}
-              time={fields.start + "-" + fields.end}
-              title={fields.title}
-              duration={fields.duration?.toString()}
-              href={"/Fagseminar-2022/slot/" + id}
-              summary={typeof fields.userIds === "undefined"}
-            />
-          );
-        })
-      }
-    </ul>
+    <article>
+      <section
+        class={`grid grid-cols-4 grid-rows-[${startTimes.length}] gap-x-8 gap-y-8`}
+      >
+        {
+          rooms.map((room, index) => {
+            return (
+              <div
+                style={`grid-col-start: ${index + 1};`}
+                class={`row-span-1 col-span-1 row-start-1`}
+              >
+                <h2 class=" text-kleather border-b-2 border-b-kleather py-1 font-bold">
+                  {getRoomName(room)}
+                </h2>
+              </div>
+            );
+          })
+        }
+
+        {
+          relevantSlots.map((slot) => {
+            const [col, row] = getRowAndCol(slot, startTimes, rooms);
+
+            const { fields, id } = slot;
+            return (
+              <div
+                style={`grid-column-start: ${col}; grid-row-start: ${row};`}
+                class={`row-span-1 col-span-1 ${row === 2 ? "-mt-4" : ""}`}
+              >
+                <EventCard
+                  props={{
+                    id: id,
+                    userName: fields.userIds ?? "",
+                    time: fields.start + "-" + fields.end,
+                    title: fields.title,
+                    duration: fields.duration?.toString(),
+                    href: "/Fagseminar-2022/slot/" + id,
+                    className: "h-full ",
+                    image: getImageUrl(slot),
+                    type: getNiceType(fields.type),
+                  }}
+                >
+                  <EventCardHeader
+                    slot="favorite"
+                    client:visible
+                    props={{
+                      duration: fields.duration?.toString(),
+                      id: id,
+                      time: fields.start + "-" + fields.end,
+                    }}
+                  />
+                </EventCard>
+              </div>
+            );
+          })
+        }
+      </section>
+    </article>
   </main>
 </Layout>
 
 <style>
   .caret {
-    width: 0;
-    height: 0;
-    display: block;
-    border: 10px solid transparent;
-  }
-
-  .caret.right {
-    border-left-color: black;
-  }
-  .caret.left {
-    border-right-color: black;
+    @apply w-10;
   }
 </style>

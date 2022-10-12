@@ -15,6 +15,7 @@ module.exports = {
       kapple: "#00B055",
       kclay: "#A5B1AA",
       kblack: "#333333",
+      defaultGray: "#828282",
     },
     fontFamily: {
       display: ["Arial", "normal"],

@@ -1,4 +1,6 @@
 ---
+import ProgramNav from "../components/ProgramNav.svelte";
+
 export interface Props {
   title: string;
   currentPage: "Home" | "Program" | "Favoritter";
@@ -22,9 +24,7 @@ const linkSelected = "navLink selectedPage";
   </head>
   <body class="w-11/12 mx-auto min-h-screen flex flex-col justify-between">
     <header>
-      <hr
-        class="border-[4px] text-kflamingo w-screen relative -left-1/2 overflow-hidden"
-      />
+      <hr class="border-[4px] text-kflamingo" />
       <nav class="w-full text-center flex justify-between my-auto py-3">
         <h1 class="font-bold text-2xl">
           <a href="/Fagseminar-2022/">Romafagseminar 2022</a>
@@ -37,9 +37,10 @@ const linkSelected = "navLink selectedPage";
             >
           </li>
           <li>
-            <a
-              class={currentPage === "Program" ? linkSelected : linkNotSelected}
-              href="/Fagseminar-2022/program">Program</a
+            <ProgramNav
+              client:load
+              style={currentPage === "Program" ? linkSelected : linkNotSelected}
+              >Program</ProgramNav
             >
           </li>
           <li>
@@ -58,7 +59,7 @@ const linkSelected = "navLink selectedPage";
             id="logo"
             class="w-full h-64 mt-6 text-center mx-auto bg-[yellow]"
           >
-            LOGO FOR EVENT PLACEHOLDER{console.log("Got here")}
+            LOGO FOR EVENT PLACEHOLDER
           </div>
         ) : (
           <div id="logo" class="w-11/12 h-24 text-center mx-auto bg-[yellow]">
@@ -95,6 +96,14 @@ const linkSelected = "navLink selectedPage";
         }
       }
 
+      .navLink,
+      .selectedPage {
+        @apply block px-2 py-2;
+      }
+      .selectedPage {
+        @apply font-bold border-b-[3px] border-b-klollipop;
+      }
+
       html {
         font-family: Arial, normal;
       }
@@ -105,14 +114,6 @@ const linkSelected = "navLink selectedPage";
       }
       li {
         @apply inline-block;
-      }
-
-      .navLink,
-      .selectedPage {
-        @apply block px-2 py-2;
-      }
-      .selectedPage {
-        @apply font-bold border-b-[3px] border-b-klollipop;
       }
     </style>
   </body>
