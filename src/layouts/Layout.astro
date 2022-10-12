@@ -15,14 +15,16 @@ const linkSelected = "navLink selectedPage";
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
   <body class="w-11/12 mx-auto min-h-screen flex flex-col justify-between">
     <header>
-      <hr class="border-[4px] text-kflamingo" />
+      <hr
+        class="border-[4px] text-kflamingo w-screen relative -left-1/2 overflow-hidden"
+      />
       <nav class="w-full text-center flex justify-between my-auto py-3">
         <h1 class="font-bold text-2xl">
           <a href="/Fagseminar-2022/">Romafagseminar 2022</a>
@@ -89,7 +91,7 @@ const linkSelected = "navLink selectedPage";
           @apply bg-ksand max-w-screen-xl;
         }
         main {
-          @apply w-full h-full;
+          @apply w-full h-full mx-auto;
         }
       }
 

@@ -14,7 +14,6 @@
   }
 </script>
 
-<p>TEST SVELTE</p>
 <div>
   <button
     on:click={handleClick}
