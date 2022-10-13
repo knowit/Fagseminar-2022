@@ -1,0 +1,80 @@
+---
+import type { TimeRecord } from "../models/airtable";
+import {
+  getRoomName,
+  getRowAndCol,
+  getImageUrl,
+  getNiceType,
+} from "../util/util";
+import EventCard from "./EventCard/EventCard.svelte";
+import EventCardHeader from "./EventCard/EventCardHeader.svelte";
+
+export interface Props {
+  relevantSlots: TimeRecord[];
+  startTimes: string[];
+  rooms: string[];
+}
+
+const { rooms, relevantSlots, startTimes } = Astro.props;
+---
+
+<section
+  class={`grid md:px-3 grid-cols-4 grid-rows-[${startTimes.length}] gap-x-8 gap-y-8 min-w-full grid-flow-row`}
+>
+  {
+    rooms.map((room, index) => {
+      return (
+        <div
+          style={`grid-col-start: ${index + 1};`}
+          class={`row-span-1 col-span-1 row-start-1`}
+        >
+          <h2 class=" text-kleather border-b-2 border-b-kleather py-1 font-bold">
+            {getRoomName(room)}
+          </h2>
+        </div>
+      );
+    })
+  }
+
+  {
+    relevantSlots.map((slot) => {
+      const [col, row] = getRowAndCol(slot, startTimes, rooms);
+
+      const { fields, id } = slot;
+      return (
+        <div
+          style={`grid-column-start: ${col}; grid-row-start: ${row};`}
+          class={`row-span-1 col-span-1 ${row === 2 ? "-mt-4" : ""}`}
+        >
+          <EventCard
+            props={{
+              id: id,
+              userName: fields.userIds ?? "",
+              time: fields.start + "-" + fields.end,
+              title: fields.title,
+              duration: fields.duration?.toString(),
+              href: "/Fagseminar-2022/slot/" + id,
+              className: "h-full ",
+              image: getImageUrl(slot),
+              type: getNiceType(fields.type),
+            }}
+          >
+            <EventCardHeader
+              slot="favorite"
+              client:visible
+              props={{
+                duration: fields.duration?.toString(),
+                id: id,
+                time: fields.start + "-" + fields.end,
+              }}
+            />
+          </EventCard>
+        </div>
+      );
+    })
+  }
+</section>
+
+<style>
+
+</style>

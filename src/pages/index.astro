@@ -4,12 +4,12 @@ import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="Knowit Fagseminar Roma 2022" currentPage="Home" fullLogo={true}>
-  <main class="flex flex-col gap-y-6 pt-12">
+  <main class="flex flex-col gap-y-6 md:pt-12">
     <section class="w-full text-center">
-      <h2 class="block text-5xl font-bold w-full text-center mb-3">
+      <h2 class="block text-3xl sm:text-5xl font-bold w-full text-center mb-3">
         Program 20-23 October 2022
       </h2>
-      <p class="w-3/5 text-center mx-auto">
+      <p class="w-full max-w-5xl text-center mx-auto">
         Knowit Objectnet loren isun sit amet, loren isun sit ametloren isun sit
         ametloren isun sit ametloren isun sit ametloren isun sit ametloren isun
         sit ametloren isun sit ametloren isun sit ametloren isun sit ametloren
@@ -124,7 +124,7 @@ import Layout from "../layouts/Layout.astro";
   }
 
   div {
-    @apply grid w-full h-fit grid-cols-4;
+    @apply grid w-full h-fit grid-cols-1 sm:grid-cols-2 lg:grid-cols-4;
   }
 
   div a {

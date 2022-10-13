@@ -1,10 +1,23 @@
 ---
+import EventCard from "../components/EventCard/EventCard.svelte";
+import EventCardHeader from "../components/EventCard/EventCardHeader.svelte";
+import FavoritesList from "../components/Favorite/FavoritesList.svelte";
 import Layout from "../layouts/Layout.astro";
+import { getData } from "../util/fetchUtil";
+import {
+  getRoomName,
+  getNiceType,
+  getImageUrl,
+  getRowAndCol,
+} from "../util/util";
+
+const data = await getData();
 ---
 
 <Layout title="Knowit Fagseminar Roma 2022" currentPage="Favoritter">
   <main class="w-full h-full pt-14 m-auto">
     <img src="" class="w-full h-10 mx-auto" />
     <h2 class="text-5xl w-fit mx-auto">Favorites</h2>
+    <FavoritesList client:visible data={data} />
   </main>
 </Layout>

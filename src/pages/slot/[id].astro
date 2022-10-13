@@ -4,6 +4,7 @@ import type { TimeRecord, TimeSlotInfo } from "../../models/airtable";
 import { getData } from "../../util/fetchUtil";
 import { formatDate } from "../../util/localeUtil";
 import speakerPhotosJson from "../../json/speaker_photos.json";
+import { getRoomName, getNiceType } from "../../util/util";
 export interface Props {
   slotInfo: TimeSlotInfo;
   photoKeys: { photoName: String; googleId: String; apiID: String };
@@ -25,23 +26,6 @@ export async function getStaticPaths() {
   });
 }
 
-function getNiceType(type: string): string {
-  switch (type) {
-    case "lightningTalk":
-      return "Lyntale";
-    case "talk":
-      return "Foredrag";
-    case "workshop":
-      return "Workshop";
-    case "discussion":
-      return "Diskusjons gruppe";
-    case "other":
-      return "Other";
-    default:
-      return "";
-  }
-}
-
 function getDateString(date: string) {
   return formatDate(date, "EEEE dd");
 }
@@ -52,23 +36,6 @@ function getSubtitleString(slot: TimeSlotInfo) {
   } ${getDateString(slot.date)} | Rom: ${slot.room}`;
 }
 
-function getRoomName(room: string) {
-  switch (room) {
-    case "SDP":
-      return "Salone dei Papi";
-    case "SLO":
-      return "Sala Lambertini + Odescalchi";
-    case "SOA":
-      return "Sala Ottoboni + Aldobrandini";
-    case "SPDR":
-      return "Sala Piccolomini + Della Rovere";
-    case "SC":
-      return "Sala Chigi";
-    default:
-      return "";
-  }
-}
-
 const { slotInfo, photoKeys } = Astro.props;
 ---
 
@@ -76,9 +43,9 @@ const { slotInfo, photoKeys } = Astro.props;
   title={slotInfo.title + " - Knowit Fagseminar Roma"}
   currentPage="Program"
 >
-  <main>
+  <main class="border h-full my-auto">
     <article
-      class="max-w-fit items-center grid grid-rows-3 w-4/5 h-full m-auto"
+      class="max-w-fit grid grid-flow-row gap-10 justify-between w-4/5 m-auto article"
     >
       <section>
         <h2 class="block text-5xl font-bold w-full">{slotInfo.title}</h2>
@@ -92,7 +59,7 @@ const { slotInfo, photoKeys } = Astro.props;
 
       <p class="text-lg">{slotInfo.description}</p>
 
-      <div class="flex gap-x-6 w-full">
+      <div class="flex flex-wrap gap-x-6 w-full">
         <section class="flex flex-col justify-center items-center gap-y-1">
           <div
             class="max-w-2xl rounded-2xl inline-block relative overflow-hidden w-fit max-h-60"
@@ -106,7 +73,7 @@ const { slotInfo, photoKeys } = Astro.props;
           <h4 class="font-semibold text-lg">{slotInfo.userIds}</h4>
           <p>{slotInfo.email}</p>
         </section>
-        <p class="my-auto">{slotInfo.speaker_bio}</p>
+        <p class="my-auto max-w-prose">{slotInfo.speaker_bio}</p>
       </div>
     </article>
   </main>
@@ -119,5 +86,9 @@ const { slotInfo, photoKeys } = Astro.props;
 
   p {
     @apply text-lg;
+  }
+
+  .article {
+    grid-template-rows: ;
   }
 </style>
