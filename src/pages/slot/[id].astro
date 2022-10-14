@@ -43,9 +43,9 @@ const { slotInfo, photoKeys } = Astro.props;
   title={slotInfo.title + " - Knowit Fagseminar Roma"}
   currentPage="Program"
 >
-  <main class="h-full my-auto">
+  <main class="h-full my-auto sm:w-11/12">
     <article
-      class="max-w-fit grid grid-flow-row gap-10 justify-between w-4/5 m-auto article"
+      class="max-w-fit grid grid-flow-row gap-10 justify-between m-auto article"
     >
       <section>
         <h2 class="block text-5xl font-bold w-full">{slotInfo.title}</h2>
@@ -59,27 +59,35 @@ const { slotInfo, photoKeys } = Astro.props;
 
       <p class="text-lg">{slotInfo.description}</p>
 
-      <div class="flex flex-wrap gap-x-6 w-full">
-        <section class="flex flex-col justify-center items-center gap-y-1">
+      <div class="bio-container flex gap-y-5 gap-x-6 w-full">
+        <section class="flex flex-col justify-center items-center min-w-fit">
           <div
             class="max-w-2xl rounded-2xl inline-block relative overflow-hidden w-fit max-h-60"
           >
             <img
               src={`/Fagseminar-2022/pictures/${photoKeys.photoName}`}
               alt=""
-              class="max-w-xl w-60"
+              class="max-w-sm w-40"
             />
           </div>
           <h4 class="font-semibold text-lg">{slotInfo.userIds}</h4>
-          <p>{slotInfo.email}</p>
+          <em>{slotInfo.email}</em>
         </section>
-        <p class="my-auto max-w-prose">{slotInfo.speaker_bio}</p>
+        <p class="my-auto md:w-full md:max-w-prose bio">
+          {slotInfo.speaker_bio}
+        </p>
       </div>
     </article>
   </main>
 </Layout>
 
 <style>
+  @media (max-width: 768px) {
+    .bio-container {
+      @apply flex-wrap justify-center text-center;
+    }
+  }
+
   strong {
     @apply font-semibold;
   }

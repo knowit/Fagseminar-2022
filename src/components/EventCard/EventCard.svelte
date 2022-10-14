@@ -16,10 +16,10 @@
 </script>
 
 <article class={`${className}`}>
-  <div class="w-full ">
-    <slot name="favorite" />
-  </div>
   <a {href}>
+    <div class="w-full ">
+      <slot name="favorite" />
+    </div>
     <figure class="flex items-center">
       <div
         class="rounded-full relative inline-block w-10 h-10 overflow-hidden align-middle"

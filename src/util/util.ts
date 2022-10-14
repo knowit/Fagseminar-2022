@@ -35,6 +35,10 @@ export function getNiceType(type: string): string {
   }
 }
 
+export function firstLetterUppercase(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 export function getImageUrl(slot: TimeRecord) {
   const speakerPhoto = speakerPhotosJson.find(
     (photo) => photo.apiID === slot.id
@@ -50,7 +54,7 @@ export function getRowAndCol(
 ) {
   return [
     rooms.findIndex((value) => slot.fields.room === value) + 1,
-    startTimes.findIndex((value) => slot.fields.start === value) + 2,
+    startTimes.findIndex((value) => slot.fields.start === value) + 1,
   ];
 }
 

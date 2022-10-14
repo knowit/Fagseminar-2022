@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@astrojs/tailwind": "^1.0.0",
+    "@iconify/svelte": "^3.0.0",
     "@tsconfig/svelte": "^3.0.0",
     "svelte-preprocess": "^4.10.7"
   }

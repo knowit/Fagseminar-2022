@@ -1,0 +1,64 @@
+---
+import { Icon } from "astro-icon";
+import format from "date-fns/format/index.js";
+import en from "date-fns/locale/en-GB/index.js";
+import { formatDate } from "../util/localeUtil";
+import { firstLetterUppercase } from "../util/util";
+
+export interface Props {
+  previousDate?: string;
+  nextDate?: string;
+  date: string;
+}
+
+const { previousDate, nextDate, date } = Astro.props;
+---
+
+<section
+  class="flex flex-wrap gap-x-7 gap-y-4 justify-center items-center w-full pb-10 sticky"
+>
+  <div class="flex flex-row items-center w-fit">
+    <a
+      class={`caret  ${previousDate != null ? "" : "pointer-events-none"} `}
+      href={previousDate != null
+        ? `/Fagseminar-2022/program/${format(new Date(previousDate), "EEEE", {
+            locale: en,
+          }).toLowerCase()}`
+        : ""}
+    >
+      <Icon
+        pack="ant-design"
+        name="caret-left-filled"
+        class={previousDate != null ? "" : "hidden"}
+      />
+    </a>
+    <h2 class="text-center font-bold block w-30 text-2xl sm:text-4xl sm:w-60">
+      {firstLetterUppercase(formatDate(date, "EEEE d."))}
+    </h2>
+    <a
+      class={`caret  ${nextDate != null ? "" : "pointer-events-none"}`}
+      href={nextDate != null
+        ? `/Fagseminar-2022/program/${format(new Date(nextDate), "EEEE", {
+            locale: en,
+          }).toLowerCase()}`
+        : ""}
+    >
+      <Icon
+        pack="ant-design"
+        name="caret-right-filled"
+        class={nextDate != null ? "" : "hidden"}
+      />
+    </a>
+  </div>
+  <p class="h-fit max-w-prose">
+    Knowit Objectnet loren isun sit amet, loren isun sit ametloren isun sit
+    ametloren isun sit ametloren isun sit ametlor oren isun sit ametloren isun
+    sit ametloren isun.
+  </p>
+</section>
+
+<style>
+  .caret {
+    @apply w-10;
+  }
+</style>

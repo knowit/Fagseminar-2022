@@ -11,9 +11,14 @@ import { formatDate } from "../../util/localeUtil";
 
 import { Icon } from "astro-icon";
 
-import { applicableRooms, applicableStartTimes } from "../../util/util";
+import {
+  applicableRooms,
+  applicableStartTimes,
+  firstLetterUppercase,
+} from "../../util/util";
 
 import ProgramListGridGap from "../../components/ProgramListGridGap.astro";
+import DayHeader from "../../components/DayHeader.astro";
 
 export interface Props {
   date: string;
@@ -48,10 +53,6 @@ export async function getStaticPaths() {
   });
 }
 
-function firstLetterUppercase(str: string) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
 const { relevantSlots, date, previousDate, nextDate, startTimes, rooms } =
   Astro.props;
 ---
@@ -61,55 +62,8 @@ const { relevantSlots, date, previousDate, nextDate, startTimes, rooms } =
     " - Knowit Fagseminar Roma"}
   currentPage="Program"
 >
-  <main class="min-h-full w-11/12 m-auto">
-    <section
-      class="flex flex-wrap gap-x-7 gap-y-4 justify-center items-center w-full pb-10"
-    >
-      <div class="flex flex-row items-center w-fit sticky top-50">
-        <a
-          class={`caret  ${previousDate != null ? "" : "pointer-events-none"} `}
-          href={previousDate != null
-            ? `/Fagseminar-2022/program/${format(
-                new Date(previousDate),
-                "EEEE",
-                {
-                  locale: en,
-                }
-              ).toLowerCase()}`
-            : ""}
-        >
-          <Icon
-            pack="ant-design"
-            name="caret-left-filled"
-            class={previousDate != null ? "" : "hidden"}
-          />
-        </a>
-        <h2
-          class="text-center font-bold block w-30 text-2xl sm:text-4xl sm:w-60"
-        >
-          {firstLetterUppercase(formatDate(date, "EEEE d"))}
-        </h2>
-        <a
-          class={`caret  ${nextDate != null ? "" : "pointer-events-none"}`}
-          href={nextDate != null
-            ? `/Fagseminar-2022/program/${format(new Date(nextDate), "EEEE", {
-                locale: en,
-              }).toLowerCase()}`
-            : ""}
-        >
-          <Icon
-            pack="ant-design"
-            name="caret-right-filled"
-            class={nextDate != null ? "" : "hidden"}
-          />
-        </a>
-      </div>
-      <p class="h-fit max-w-prose">
-        Knowit Objectnet loren isun sit amet, loren isun sit ametloren isun sit
-        ametloren isun sit ametloren isun sit ametlor oren isun sit ametloren
-        isun sit ametloren isun.
-      </p>
-    </section>
+  <main class="w-11/12 m-auto min-h-full">
+    <DayHeader date={date} nextDate={nextDate} previousDate={previousDate} />
 
     <ProgramListGridGap
       relevantSlots={relevantSlots}

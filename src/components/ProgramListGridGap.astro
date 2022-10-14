@@ -18,9 +18,7 @@ export interface Props {
 const { rooms, relevantSlots, startTimes } = Astro.props;
 ---
 
-<section
-  class={`grid md:px-3 grid-cols-4 grid-rows-[${startTimes.length}] gap-x-8 gap-y-8 min-w-full grid-flow-row`}
->
+<div class="grid-containers bg-ksand sticky top-[4rem] z-50">
   {
     rooms.map((room, index) => {
       return (
@@ -35,7 +33,9 @@ const { rooms, relevantSlots, startTimes } = Astro.props;
       );
     })
   }
+</div>
 
+<section class={`grid-containers grid-rows-[${startTimes.length}] `}>
   {
     relevantSlots.map((slot) => {
       const [col, row] = getRowAndCol(slot, startTimes, rooms);
@@ -44,7 +44,7 @@ const { rooms, relevantSlots, startTimes } = Astro.props;
       return (
         <div
           style={`grid-column-start: ${col}; grid-row-start: ${row};`}
-          class={`row-span-1 col-span-1 ${row === 2 ? "-mt-4" : ""}`}
+          class={`row-span-1 col-span-1 px-1 ${row === 2 ? "-mt-4" : ""}`}
         >
           <EventCard
             props={{
@@ -76,5 +76,7 @@ const { rooms, relevantSlots, startTimes } = Astro.props;
 </section>
 
 <style>
-
+  .grid-containers {
+    @apply grid md:px-3 grid-cols-4 gap-x-8 gap-y-8 min-w-full grid-flow-row;
+  }
 </style>

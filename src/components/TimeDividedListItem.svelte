@@ -12,7 +12,7 @@
 
 <li class="w-full">
   <h3><time>{formatDate(time, "HH:mm")}</time></h3>
-  <ul class="flex w-full justify-around">
+  <ul class="flex w-full flex-wrap justify-around">
     {#each slots as slot}
       <EventCardWithRoom
         props={{
@@ -22,7 +22,7 @@
           title: slot.fields.title,
           duration: slot.fields.duration?.toString(),
           href: "/Fagseminar-2022/slot/" + slot.id,
-          className: "h-full ",
+          className: "h-full w-1/4 px-4",
           image: getImageUrl(slot),
           type: getNiceType(slot.fields.type),
           room: getRoomName(slot.fields.room),
