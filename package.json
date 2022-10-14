@@ -14,8 +14,6 @@
     "astro": "^1.1.5",
     "astro-icon": "^0.7.3",
     "date-fns": "^2.29.3",
-    "google-auth-library": "^8.5.2",
-    "googleapis": "^108.0.0",
     "svelte": "^3.48.0"
   },
   "devDependencies": {

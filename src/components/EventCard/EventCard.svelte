@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { file } from "googleapis/build/src/apis/file";
   import type { TimeRecord } from "../../models/airtable";
   import { getImageUrl, getNiceType } from "../../util/util";
 
