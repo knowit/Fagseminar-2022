@@ -4,19 +4,13 @@ import EventCardHeader from "../components/EventCard/EventCardHeader.svelte";
 import FavoritesList from "../components/Favorite/FavoritesList.svelte";
 import Layout from "../layouts/Layout.astro";
 import { getData } from "../util/fetchUtil";
-import {
-  getRoomName,
-  getNiceType,
-  getImageUrl,
-  getRowAndCol,
-} from "../util/util";
 
 const data = await getData();
 ---
 
 <Layout title="Knowit Fagseminar Roma 2022" currentPage="Favoritter">
-  <main class="w-full h-full lg:pt-14 m-auto">
-    <h2 class="text-5xl w-fit mx-auto mb-4 lg:mb-0">Favoritter</h2>
-    <FavoritesList client:visible data={data} />
+  <main class="w-full h-full lg:pt-8 m-auto">
+    <h2 class="text-5xl w-fit mx-auto mb-4 lg:mb-0">Dine favoritter</h2>
+    <FavoritesList client:load data={data} />
   </main>
 </Layout>

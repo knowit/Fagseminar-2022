@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { validate_each_argument } from "svelte/internal";
   import type { TimeRecord } from "../models/airtable";
   import { groupBy } from "../util/groupUtil";
   import { formatDate } from "../util/localeUtil";
@@ -44,7 +43,9 @@
       );
   }
 
-  const dividedSlots = divideByDate(slots).map((value) => {
+  $: dividedSlots = divideByDate(slots).map((value) => {
+    console.log(slots);
+    console.log(value);
     return { date: value.date, slots: divideByStartTime(value.slots) };
   });
 
@@ -53,24 +54,32 @@
   }
 </script>
 
-<ul>
+<ul class="w-full">
   {#each dividedSlots as slot}
-    <li class="dateslot">
-      <h2 class="text-4xl font-bold text-kleather p-2">
+    <li class="dateslot w-full">
+      <h2
+        class="text-4xl font-bold text-kleather p-2 sticky top-[3.2rem] md:top-[4rem] z-10 w-full bg-ksand border-b-4 border-kleather"
+      >
         {firstLetterUppercase(formatDate(slot.date, "EEEE d."))}
       </h2>
-      <ul class="timeslot p-2">
-        {#each slot.slots as timeSlot}
-          <TimeDividedListItem
-            time={new Date(
-              2022,
-              9,
-              21,
-              Number(timeSlot.start.split(":")[0]),
-              Number(timeSlot.start.split(":")[1])
-            )}
-            slots={timeSlot.slots}
-          />
+      <ul class="timeslot">
+        {#each slot.slots as timeSlot, index}
+          <li
+            class={`w-full px-2 py-3 ${
+              index != 0 ? "border-t-2 border-t-kblack" : ""
+            }`}
+          >
+            <TimeDividedListItem
+              time={new Date(
+                2022,
+                9,
+                21,
+                Number(timeSlot.start.split(":")[0]),
+                Number(timeSlot.start.split(":")[1])
+              )}
+              bind:slots={timeSlot.slots}
+            />
+          </li>
         {/each}
       </ul>
     </li>
@@ -78,11 +87,4 @@
 </ul>
 
 <style>
-  .dateslot ul {
-    @apply border-t-4 border-kleather;
-  }
-
-  .timeslot :global(li:not(:last-child)) {
-    @apply border-b-2;
-  }
 </style>

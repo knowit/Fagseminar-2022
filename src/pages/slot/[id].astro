@@ -50,11 +50,20 @@ const { slotInfo, photoKeys } = Astro.props;
       <section>
         <h2 class="block text-5xl font-bold w-full">{slotInfo.title}</h2>
         <h3 class="text-2xl h-fit text-ellipsis w-full">
-          {getNiceType(slotInfo.type)} - <strong>{slotInfo.duration}</strong>
-          kl. {slotInfo.start}
-          <strong>{getDateString(slotInfo.date)}</strong>
+          {getNiceType(slotInfo.type)} - <strong
+            >{slotInfo.duration} Min <b>|</b>
+          </strong>
+          kl.
+          {slotInfo.start}
+          <strong>{getDateString(slotInfo.date)} <b>|</b></strong>
+
           Rom: <strong>{getRoomName(slotInfo.room)}</strong>
         </h3>
+        <a
+          class="italic text-lg underline text-klollipop"
+          href="https://www.app2u.se/ords/f?p=700:1012:::::P0_EVENT_ID,P0_PAGE_ID,P0_INVITATION_CODE:7641976,7872744,BvuiznGrjfT9bCkCH7Gcf8e3426"
+          >Workshop Påmelding</a
+        >
       </section>
 
       <p class="text-lg">{slotInfo.description}</p>
@@ -82,6 +91,10 @@ const { slotInfo, photoKeys } = Astro.props;
 </Layout>
 
 <style>
+  b {
+    @apply align-middle text-center mb-2 inline-block;
+  }
+
   @media (max-width: 768px) {
     .bio-container {
       @apply flex-wrap justify-center text-center;

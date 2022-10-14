@@ -1,59 +1,65 @@
 <script lang="ts">
-  export let props: {
-    id: string;
-    title: string;
-    href: string;
-    time: string;
-    duration: string;
-    userName: string;
-    className: string;
-    image: string;
-    type: string;
-    room: string;
-  };
+  import type { TimeRecord } from "../../models/airtable";
+  import { getImageUrl, getNiceType, getRoomName } from "../../util/util";
 
-  const {
-    id,
-    href,
-    title,
-    userName,
-    time,
-    duration,
-    className,
-    image,
-    type,
-    room,
-  } = props;
+  export let data: TimeRecord;
+
+  export let className: String;
 </script>
 
 <article class={` ${className}`}>
-  <a {href}>
-    <div class="w-full ">
-      <slot name="favorite" />
-    </div>
-    <figure class="flex items-center">
-      <div
-        class="rounded-full relative inline-block w-10 h-10 overflow-hidden align-middle"
-      >
+  <div class="w-full">
+    <slot name="favorite" />
+  </div>
+  <a href={"/Fagseminar-2022/slot/" + data.id}>
+    <figure class="flex items-center my-1 gap-x-3">
+      <span class="circle-image">
         <img
-          class="w-10 h-full max-w-xl min-h-full"
-          src={`/Fagseminar-2022/pictures/${image}`}
+          src={`/Fagseminar-2022/pictures/${getImageUrl(data)}`}
           alt=""
+          class="max-w-sm w-40"
         />
-      </div>
+      </span>
       <figcaption class="font-bold text-sm">
-        {userName}
+        {data.fields.userIds != null ? data.fields.userIds : ""}
       </figcaption>
     </figure>
-    <p class="text-ellipsis ">
-      {title}
+    <p class="text-ellipsis mb-1">
+      {data.fields.title}
     </p>
     <footer>
-      <em class="text-kleather not-italic block">{type}</em>
-      <em class="text-kleather not-italic block">{room}</em>
+      <em class="text-kleather not-italic block"
+        >{getNiceType(data.fields.type)}</em
+      >
+      <em class="text-kleather not-italic block"
+        >{getRoomName(data.fields.room)}</em
+      >
     </footer>
   </a>
 </article>
 
 <style>
+  @media (max-width: 768px) {
+    figcaption {
+      font-size: large;
+    }
+
+    p {
+      font-size: large;
+    }
+  }
+
+  .circle-image {
+    display: inline-block;
+    border-radius: 50%;
+    overflow: hidden;
+    width: 50px;
+    height: 50px;
+  }
+
+  .circle-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 </style>

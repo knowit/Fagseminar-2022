@@ -1,0 +1,232 @@
+---
+import ar from "date-fns/locale/ar";
+import type { TimeRecord } from "../models/airtable";
+import { groupBy } from "../util/groupUtil";
+import {
+  getRoomName,
+  getRowAndCol,
+  getImageUrl,
+  getNiceType,
+  uniqueFilter,
+} from "../util/util";
+import EventCard from "./EventCard/EventCard.svelte";
+import EventCardHeader from "./EventCard/EventCardHeader.svelte";
+
+export interface Props {
+  relevantSlots: TimeRecord[];
+}
+
+function roomValue(room: string) {
+  switch (room) {
+    case "SDP":
+      return 4;
+    case "SLO":
+      return 3;
+    case "SOA":
+      return 2;
+    case "SPDR":
+      return 1;
+    case "SC":
+      return 4;
+    default:
+      return 0;
+  }
+}
+
+function getTimeSpanAmount(slot: TimeRecord, otherSlots: TimeRecord[]) {
+  const dividedByRoom = divideByRoom(otherSlots);
+  return dividedByRoom
+    .filter((value) => value.room !== slot.fields.room)
+    .map((value) => {
+      return {
+        room: value.room,
+        rowSpan: value.slots.filter(
+          (timeSlot) =>
+            timeBeforeTime(timeSlot.fields.start, slot.fields.end) &&
+            timeBeforeTime(slot.fields.start, timeSlot.fields.end) &&
+            !(
+              timeSlot.fields.start === slot.fields.start &&
+              timeSlot.fields.end === slot.fields.end
+            )
+        ).length,
+      };
+    });
+}
+
+function getTimeSpanLi(
+  room: string,
+  calc: { room: string; rowSpan: number }[]
+) {
+  const classes = [
+    [
+      "",
+      "white-space-room-1-2",
+      "white-space-room-1-3",
+      "white-space-room-1-4",
+    ],
+    [
+      "white-space-room-2-1",
+      "",
+      "white-space-room-2-3",
+      "white-space-room-2-4",
+    ],
+    [
+      "white-space-room-3-1",
+      "white-space-room-3-2",
+      "",
+      "white-space-room-3-4",
+    ],
+    [
+      "white-space-room-4-1",
+      "white-space-room-4-2",
+      "white-space-room-4-3",
+      "",
+    ],
+  ];
+
+  const arr: string[][] = [];
+  const numberRoom = roomValue(room) - 1;
+
+  calc.forEach((value, index) => {
+    for (let index = 0; index < value.rowSpan; index++) {
+      arr[index] =
+        arr[index] != null
+          ? [...arr[index], classes[numberRoom][roomValue(value.room) - 1]]
+          : [classes[numberRoom][roomValue(value.room) - 1]];
+    }
+  });
+
+  return arr;
+}
+
+function getBuffer(slot: TimeRecord, otherSlots: TimeRecord[]) {
+  const v = getTimeSpanAmount(slot, otherSlots);
+
+  if (v != null) {
+    console.log(slot.fields.userIds != null ? slot.fields.userIds : "", v);
+    return getTimeSpanLi(slot.fields.room, v);
+  }
+  return [];
+}
+
+function timeBeforeTime(start: string, end: string) {
+  const startDateTime = new Date(
+    2022,
+    9,
+    21,
+    Number(start.split(":")[0]),
+    Number(start.split(":")[1])
+  );
+  const endDateTime = new Date(
+    2022,
+    9,
+    21,
+    Number(end.split(":")[0]),
+    Number(end.split(":")[1])
+  );
+
+  return startDateTime < endDateTime;
+}
+
+function divideByRoom(slots: TimeRecord[]) {
+  const roomDividedSlots = groupBy(slots, (value) => value.fields.room);
+
+  return Object.keys(roomDividedSlots)
+    .map((key) => {
+      return { room: key, slots: roomDividedSlots[key] };
+    })
+    .sort((a, b) => (roomValue(a.room) < roomValue(b.room) ? 1 : -1));
+}
+
+const { relevantSlots } = Astro.props;
+---
+
+<div>
+  <div
+    class="snap-x snap-mandatory sp grid grid-container lg:grid-cols-4 lg:gap-x-6 grid-rows-[1fr,_auto] overflow-x-scroll lg:overflow-x-visible h-full"
+  >
+    {
+      divideByRoom(relevantSlots).map((room) => {
+        return (
+          <ul
+            class={`pt-4 flex flex-col gap-y-2 w-full lg:pr-0 snap-center px-2 `}
+          >
+            <li class="lg:sticky block lg:top-[4rem] bg-ksand">
+              <h2 class="text-kleather border-b-2 border-b-kleather py-1 font-bold">
+                {getRoomName(room.room)}
+              </h2>
+            </li>
+            {room.slots.map((slot) => {
+              return (
+                <>
+                  <li class="h-48">
+                    <EventCard data={slot} className={""}>
+                      <EventCardHeader
+                        slot="favorite"
+                        client:visible
+                        data={slot}
+                      />
+                    </EventCard>
+                  </li>
+                </>
+              );
+            })}
+          </ul>
+        );
+      })
+    }
+  </div>
+</div>
+
+<style>
+  .white-space-room-1-2,
+  .white-space-room-1-3,
+  .white-space-room-1-4 {
+  }
+
+  .white-space-room-2-1,
+  .white-space-room-2-3,
+  .white-space-room-2-4 {
+  }
+  .white-space-room-3-2,
+  .white-space-room-3-1,
+  .white-space-room-3-4 {
+  }
+
+  .white-space-room-4-2,
+  .white-space-room-4-3,
+  .white-space-room-4-1 {
+  }
+
+  @media (max-width: 768px) {
+    .event {
+      max-width: 30rem;
+      width: 100%;
+    }
+    .timeList {
+      row-gap: 1.5rem;
+    }
+  }
+
+  .grid-container {
+    grid-template-columns: repeat(4, 100%);
+  }
+
+  @media (min-width: 768px) {
+    .grid-container {
+      grid-template-columns: repeat(4, 50%);
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .sp {
+      @apply overflow-auto;
+    }
+    .timeList {
+      row-gap: 2.5rem;
+    }
+    .grid-container {
+      @apply grid-cols-4;
+    }
+  }
+</style>

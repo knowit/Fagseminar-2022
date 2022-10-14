@@ -53,8 +53,8 @@ export function getRowAndCol(
   rooms: string[]
 ) {
   return [
-    rooms.findIndex((value) => slot.fields.room === value) + 1,
-    startTimes.findIndex((value) => slot.fields.start === value) + 1,
+    rooms.findIndex((value) => slot.fields.room === value) + 1, //col
+    startTimes.findIndex((value) => slot.fields.start === value) + 1, //row
   ];
 }
 

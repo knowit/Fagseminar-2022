@@ -19,6 +19,7 @@ import {
 
 import ProgramListGridGap from "../../components/ProgramListGridGap.astro";
 import DayHeader from "../../components/DayHeader.astro";
+import ProgramListFlex from "../../components/ProgramListFlex.astro";
 
 export interface Props {
   date: string;
@@ -62,19 +63,70 @@ const { relevantSlots, date, previousDate, nextDate, startTimes, rooms } =
     " - Knowit Fagseminar Roma"}
   currentPage="Program"
 >
-  <main class="w-11/12 m-auto min-h-full">
-    <DayHeader date={date} nextDate={nextDate} previousDate={previousDate} />
+  <main class="m-auto min-h-full">
+    <div class="pb-4 md:pt-5">
+      <DayHeader date={date} nextDate={nextDate} previousDate={previousDate} />
+    </div>
 
-    <ProgramListGridGap
-      relevantSlots={relevantSlots}
-      rooms={rooms}
-      startTimes={startTimes}
-    />
+    <div class="flexList">
+      <ProgramListFlex relevantSlots={relevantSlots} />
+    </div>
+    <div class="gridList">
+      <ProgramListGridGap
+        relevantSlots={relevantSlots}
+        startTimes={startTimes}
+        rooms={rooms}
+      />
+    </div>
+    <div class="md:mt-2">
+      <DayHeader date={date} nextDate={nextDate} previousDate={previousDate} />
+    </div>
   </main>
 </Layout>
 
 <style>
-  .caret {
-    @apply w-10;
+  @media (max-width: 768px) {
+    main {
+      @apply bg-kleather;
+    }
+  }
+
+  @media (min-width: 768px) {
+    main {
+      @apply bg-kforest;
+    }
+  }
+
+  .flexList {
+    display: block;
+  }
+  .gridList {
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    main {
+      @apply bg-kpear;
+    }
+
+    .flexList {
+      display: none;
+    }
+    .gridList {
+      display: block;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    main {
+      @apply bg-kpear;
+    }
+
+    .flexList {
+      display: none;
+    }
+    .gridList {
+      display: block;
+    }
   }
 </style>

@@ -1,29 +1,31 @@
 <script lang="ts">
+  import { onDestroy } from "svelte";
   import type { TimeRecord } from "../../models/airtable";
-  import { getImageUrl, getNiceType } from "../../util/util";
-  import EventCard from "../EventCard/EventCard.svelte";
-  import EventCardHeader from "../EventCard/EventCardHeader.svelte";
+
   import TimeDividedList from "../TimeDividedList.svelte";
-  import FavoriteButton from "./FavoriteButton.svelte";
+
+  import { favorites } from "../../stores/favoriteStore";
 
   export let data: TimeRecord[];
 
-  const keys: string[] = [];
+  let dataFavorites: TimeRecord[];
 
-  for (let index = 0; index < localStorage.length; index++) {
-    const key = localStorage.key(index);
-    if (key != null) {
-      keys.push(key);
-    }
-  }
+  const unsubscribe = favorites.subscribe((value) => {
+    dataFavorites = data.filter((data) => value.includes(data.id));
+    console.log(dataFavorites);
+  });
 
-  const favorites: TimeRecord[] = data.filter((value) =>
-    keys.includes(value.id)
-  );
+  onDestroy(unsubscribe);
 </script>
 
 <section>
-  <TimeDividedList slots={favorites} />
+  {#if dataFavorites != null && dataFavorites.length !== 0}
+    <TimeDividedList bind:slots={dataFavorites} />
+  {:else}
+    <p class=" text-center text-xl">
+      Det virker som at du ikke har valgt noen favoritter enda
+    </p>
+  {/if}
 </section>
 
 <style></style>

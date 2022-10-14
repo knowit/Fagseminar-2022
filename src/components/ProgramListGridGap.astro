@@ -35,39 +35,18 @@ const { rooms, relevantSlots, startTimes } = Astro.props;
   }
 </div>
 
-<section class={`grid-containers grid-rows-[${startTimes.length}] `}>
+<section class={`grid-containers grid-rows-[${startTimes.length}] pt-4`}>
   {
     relevantSlots.map((slot) => {
       const [col, row] = getRowAndCol(slot, startTimes, rooms);
 
-      const { fields, id } = slot;
       return (
         <div
           style={`grid-column-start: ${col}; grid-row-start: ${row};`}
-          class={`row-span-1 col-span-1 px-1 ${row === 2 ? "-mt-4" : ""}`}
+          class={`row-span-1 col-span-1 px-1`}
         >
-          <EventCard
-            props={{
-              id: id,
-              userName: fields.userIds ?? "",
-              time: fields.start + "-" + fields.end,
-              title: fields.title,
-              duration: fields.duration?.toString(),
-              href: "/Fagseminar-2022/slot/" + id,
-              className: "h-full ",
-              image: getImageUrl(slot),
-              type: getNiceType(fields.type),
-            }}
-          >
-            <EventCardHeader
-              slot="favorite"
-              client:visible
-              props={{
-                duration: fields.duration?.toString(),
-                id: id,
-                time: fields.start + "-" + fields.end,
-              }}
-            />
+          <EventCard data={slot} className={""}>
+            <EventCardHeader slot="favorite" client:visible data={slot} />
           </EventCard>
         </div>
       );

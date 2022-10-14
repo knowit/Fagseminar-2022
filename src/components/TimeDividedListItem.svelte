@@ -10,35 +10,47 @@
   export let time: Date;
 </script>
 
-<li class="w-full">
-  <h3><time>{formatDate(time, "HH:mm")}</time></h3>
-  <ul class="flex w-full flex-wrap justify-around">
+<div>
+  <h3 class="timeHeader text-2xl w-full font-bold pb-2">
+    <time>{formatDate(time, "HH:mm")}</time>
+  </h3>
+  <ul class="timeList flex flex-row w-full flex-wrap justify-around px-4 ">
     {#each slots as slot}
-      <EventCardWithRoom
-        props={{
-          id: slot.id,
-          userName: slot.fields.userIds ?? "",
-          time: slot.fields.start + "-" + slot.fields.end,
-          title: slot.fields.title,
-          duration: slot.fields.duration?.toString(),
-          href: "/Fagseminar-2022/slot/" + slot.id,
-          className: "h-full w-1/4 px-4",
-          image: getImageUrl(slot),
-          type: getNiceType(slot.fields.type),
-          room: getRoomName(slot.fields.room),
-        }}
-      >
-        <EventCardHeader
-          slot="favorite"
-          props={{
-            duration: slot.fields.duration?.toString(),
-            id: slot.id,
-            time: slot.fields.start + "-" + slot.fields.end,
-          }}
-        />
-      </EventCardWithRoom>
+      <li class="event w-full xl:w-1/4 min-w-min px-2 ">
+        <EventCardWithRoom bind:data={slot} className="">
+          <EventCardHeader slot="favorite" bind:data={slot} />
+        </EventCardWithRoom>
+      </li>
     {/each}
   </ul>
-</li>
+</div>
 
-<style></style>
+<style>
+  @media (max-width: 768px) {
+    .event {
+      max-width: 30rem;
+      width: 100%;
+    }
+    .timeList {
+      row-gap: 1.5rem;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .event {
+      width: 50%;
+    }
+    .timeList {
+      row-gap: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .event {
+      width: 25%;
+    }
+    .timeList {
+      row-gap: 2.5rem;
+    }
+  }
+</style>

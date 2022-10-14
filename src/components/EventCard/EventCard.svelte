@@ -1,45 +1,61 @@
 <script lang="ts">
-  export let props: {
-    id: string;
-    title: string;
-    href: string;
-    time: string;
-    duration: string;
-    userName: string;
-    className: string;
-    image: string;
-    type: string;
-  };
+  import { file } from "googleapis/build/src/apis/file";
+  import type { TimeRecord } from "../../models/airtable";
+  import { getImageUrl, getNiceType } from "../../util/util";
 
-  const { id, href, title, userName, time, duration, className, image, type } =
-    props;
+  export let data: TimeRecord;
+
+  export let className: String;
 </script>
 
 <article class={`${className}`}>
-  <a {href}>
-    <div class="w-full ">
-      <slot name="favorite" />
-    </div>
-    <figure class="flex items-center">
-      <div
-        class="rounded-full relative inline-block w-10 h-10 overflow-hidden align-middle"
-      >
+  <div class="w-full ">
+    <slot name="favorite" />
+  </div>
+  <a href={"/Fagseminar-2022/slot/" + data.id}>
+    <figure class="my-1 flex items-center gap-x-2">
+      <span class="circle-image">
         <img
-          class="w-10 h-full max-w-xl min-h-full"
-          src={`/Fagseminar-2022/pictures/${image}`}
+          src={`/Fagseminar-2022/pictures/${getImageUrl(data)}`}
           alt=""
+          class="max-w-sm w-40"
         />
-      </div>
-      <figcaption class="font-bold text-sm">
-        {userName}
+      </span>
+      <figcaption class="font-bold">
+        {data.fields.userIds != null ? data.fields.userIds : ""}
       </figcaption>
     </figure>
-    <p class="text-ellipsis ">
-      {title}
+    <p class="text-clip mb-1">
+      {data.fields.title.length >= 80
+        ? data.fields.title.substring(0, 80) + "..."
+        : data.fields.title}
     </p>
-    <em class="text-kleather not-italic">{type}</em>
+    <em class="text-kleather not-italic">{getNiceType(data.fields.type)}</em>
   </a>
 </article>
 
 <style>
+  @media (max-width: 768px) {
+    figcaption {
+      font-size: large;
+    }
+
+    p {
+      font-size: large;
+    }
+  }
+
+  .circle-image {
+    display: inline-block;
+    border-radius: 50%;
+    overflow: hidden;
+    width: 50px;
+    height: 50px;
+  }
+
+  .circle-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 </style>

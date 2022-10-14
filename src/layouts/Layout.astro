@@ -1,5 +1,7 @@
 ---
 import { Icon } from "astro-icon";
+import RomaLogoColored from "../components/Logo/RomaLogoColored.astro";
+import RomaLogoMono from "../components/Logo/RomaLogoMono.astro";
 import ProgramNav from "../components/ProgramNav.svelte";
 
 export interface Props {
@@ -15,7 +17,7 @@ const linkSelected = "navLink selectedPage";
 ---
 
 <!DOCTYPE html>
-<html lang="en" class="w-screen min-h-full h-screen max-w-full">
+<html lang="en" class="w-screen min-h-full h-screen min-w-full">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -27,7 +29,7 @@ const linkSelected = "navLink selectedPage";
     <header class="sticky top-0 bg-ksand z-20">
       <hr class="border-[4px] text-kflamingo" />
       <nav
-        class="w-full px-4 xl:px-0 text-center flex justify-between my-auto h-fit py-2 items-center"
+        class="w-full px-4 lg:px-0 text-center flex justify-between my-auto h-fit py-2 items-center"
       >
         <h1 class="font-bold text-xl sm:text-2xl">
           <a href="/Fagseminar-2022/">Romafagseminar 2022</a>
@@ -65,12 +67,12 @@ const linkSelected = "navLink selectedPage";
     <div class="px-4 xl:px-0 mb-6 xl:mb-0 mt-6">
       {
         fullLogo ? (
-          <div class="w-full h-64  text-center mx-auto bg-[yellow] px-4 xl:px-0">
-            LOGO FOR EVENT PLACEHOLDER
+          <div class="w-full text-center mx-auto p-0 px-4 md:p4">
+            <RomaLogoColored />
           </div>
         ) : (
-          <div class="w-full h-24 text-center mx-auto bg-[yellow]">
-            LOGO FOR EVENT PLACEHOLDER
+          <div class="w-full md:mb-5 h-24 text-center mx-auto">
+            <RomaLogoMono />
           </div>
         )
       }
@@ -97,13 +99,13 @@ const linkSelected = "navLink selectedPage";
       @layer base {
         html {
           font-family: Arial, normal;
-          @apply w-screen max-w-full;
+          @apply w-screen min-h-full h-screen max-w-full;
         }
         body {
-          @apply bg-ksand max-w-screen-xl;
+          @apply bg-ksand lg:px-20;
         }
         main {
-          @apply w-full h-full mx-auto py-2 md:py-5   px-4 xl:px-0;
+          @apply w-full h-full mx-auto py-2 md:py-5 px-4 lg:px-0;
         }
       }
 
