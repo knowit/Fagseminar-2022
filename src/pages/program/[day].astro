@@ -68,15 +68,8 @@ const { relevantSlots, date, previousDate, nextDate, startTimes, rooms } =
       <DayHeader date={date} nextDate={nextDate} previousDate={previousDate} />
     </div>
 
-    <div class="flexList">
+    <div class="">
       <ProgramListFlex relevantSlots={relevantSlots} />
-    </div>
-    <div class="gridList">
-      <ProgramListGridGap
-        relevantSlots={relevantSlots}
-        startTimes={startTimes}
-        rooms={rooms}
-      />
     </div>
     <div class="md:mt-2">
       <DayHeader date={date} nextDate={nextDate} previousDate={previousDate} />
@@ -85,34 +78,5 @@ const { relevantSlots, date, previousDate, nextDate, startTimes, rooms } =
 </Layout>
 
 <style>
-  @media (max-width: 768px) {
-  }
 
-  @media (min-width: 768px) {
-  }
-
-  .flexList {
-    display: block;
-  }
-  .gridList {
-    display: none;
-  }
-
-  @media (min-width: 1024px) {
-    .flexList {
-      display: none;
-    }
-    .gridList {
-      display: block;
-    }
-  }
-
-  @media (min-width: 1280px) {
-    .flexList {
-      display: none;
-    }
-    .gridList {
-      display: block;
-    }
-  }
 </style>
