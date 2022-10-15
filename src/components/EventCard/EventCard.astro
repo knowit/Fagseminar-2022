@@ -10,7 +10,7 @@ export interface Props {
 }
 
 const { className, data } = Astro.props;
-const imgSrc = (await import(`../pictures/${data.id}.png`)).default;
+const imgSrc = (await import(`../../pictures/${data.id}.png`)).default;
 ---
 
 <article class={`${className}`}>
