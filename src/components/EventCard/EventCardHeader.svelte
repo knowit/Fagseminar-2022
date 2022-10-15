@@ -1,5 +1,7 @@
 <script lang="ts">
-  import Icon from "@iconify/svelte";
+  import ICO_Heart_Selected from "~icons/knowit-icons/ICO_Heart_Selected";
+  import ICO_Heart_Unselected from "~icons/knowit-icons/ICO_Heart_Unselected";
+
   import type { TimeRecord } from "../../models/airtable";
   import { favorites } from "../../stores/favoriteStore";
 
@@ -33,12 +35,10 @@
     </p></a
   >
   <div class="icon align-middle">
-    <button on:click={handleClick} class="w-full h-full m-auto z-50">
+    <button on:click={handleClick} class="w-10 h-10 m-auto z-50">
       {#if favorite}
-        <Icon icon="bi:suit-heart-fill" color="#FF00FF" class="w-full h-full" />
-      {:else}
-        <Icon icon="bi:suit-heart-fill" color="#828282" class="w-full h-full" />
-      {/if}
+        <ICO_Heart_Selected width="100%" height="100%" />
+      {:else}<ICO_Heart_Unselected width="100%" height="100%" />{/if}
     </button>
   </div>
 </div>

@@ -1,5 +1,5 @@
-import type { TimeRecord } from "../models/airtable";
-import speakerPhotosJson from "../json/speaker_photos.json";
+import type { TimeRecord, TimeSlotInfo } from "../models/airtable";
+import speakerPhotosJson from "../json/speaker_photos_new.json";
 
 export function getRoomName(room: string) {
   switch (room) {
@@ -45,6 +45,10 @@ export function getImageUrl(slot: TimeRecord) {
   );
 
   return speakerPhoto != null ? speakerPhoto.photoName : "";
+}
+
+export function getSpeakerPhoto(slot: TimeRecord) {
+  return speakerPhotosJson.find((photo) => photo.apiID === slot.id);
 }
 
 export function getRowAndCol(

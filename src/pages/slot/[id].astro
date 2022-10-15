@@ -1,27 +1,21 @@
 ---
+import { Picture } from "@astrojs/image/components";
 import Layout from "../../layouts/Layout.astro";
 import type { TimeRecord, TimeSlotInfo } from "../../models/airtable";
 import { getData } from "../../util/fetchUtil";
 import { formatDate } from "../../util/localeUtil";
-import speakerPhotosJson from "../../json/speaker_photos.json";
-import { getRoomName, getNiceType } from "../../util/util";
+import { getRoomName, getNiceType, getImageUrl } from "../../util/util";
 export interface Props {
-  slotInfo: TimeSlotInfo;
-  photoKeys: { photoName: String; googleId: String; apiID: String };
+  slot: TimeRecord;
 }
 
 export async function getStaticPaths() {
   const data = await getData();
 
   return data.map((timeSlot) => {
-    const speakerPhoto = speakerPhotosJson.find(
-      (photo) => photo.apiID === timeSlot.id
-    );
-
-    const fields = timeSlot.fields;
     return {
       params: { id: timeSlot.id },
-      props: { slotInfo: fields, photoKeys: speakerPhoto },
+      props: { slot: timeSlot },
     };
   });
 }
@@ -36,7 +30,8 @@ function getSubtitleString(slot: TimeSlotInfo) {
   } ${getDateString(slot.date)} | Rom: ${slot.room}`;
 }
 
-const { slotInfo, photoKeys } = Astro.props;
+const { slot } = Astro.props;
+const slotInfo = slot.fields;
 ---
 
 <Layout
@@ -48,16 +43,21 @@ const { slotInfo, photoKeys } = Astro.props;
       class="max-w-fit grid grid-flow-row gap-10 justify-between m-auto article"
     >
       <section>
-        <h2 class="block text-5xl font-bold w-full">{slotInfo.title}</h2>
+        <h2 class="block text-4xl lg:text-5xl font-bold w-full pt-4 lg:pt-0">
+          {slotInfo.title}
+        </h2>
         <h3 class="text-2xl h-fit text-ellipsis w-full">
-          {getNiceType(slotInfo.type)} - <strong
-            >{slotInfo.duration} Min <b>|</b>
-          </strong>
-          kl.
-          {slotInfo.start}
-          <strong>{getDateString(slotInfo.date)} <b>|</b></strong>
-
-          Rom: <strong>{getRoomName(slotInfo.room)}</strong>
+          <span
+            >{getNiceType(slotInfo.type)} - <strong
+              >{slotInfo.duration} Min <b class="">|</b>
+            </strong>
+          </span><span>
+            kl.
+            {slotInfo.start}
+            <strong>{getDateString(slotInfo.date)} <b class="">|</b></strong>
+          </span><span>
+            Rom: <strong>{getRoomName(slotInfo.room)}</strong>
+          </span>
         </h3>
         <a
           class="italic text-lg underline text-klollipop"
@@ -71,10 +71,13 @@ const { slotInfo, photoKeys } = Astro.props;
       <div class="bio-container flex gap-y-5 gap-x-6 w-full">
         <section class="flex flex-col justify-center items-center min-w-fit">
           <div
-            class="max-w-2xl rounded-2xl inline-block relative overflow-hidden w-fit max-h-60"
+            class="max-w-2xl rounded-2xl w-44 lg:w-64 inline-block relative overflow-hidden"
           >
-            <img
-              src={`/Fagseminar-2022/pictures/${photoKeys.photoName}`}
+            <Picture
+              widths={[200, 400, 800]}
+              sizes="(max-width: 800px) 100vw, 800px"
+              formats={["avif", "webp"]}
+              src={import(`../src/pictures/${getImageUrl(slot)}`)}
               alt=""
               class="max-w-sm w-40"
             />
@@ -91,8 +94,12 @@ const { slotInfo, photoKeys } = Astro.props;
 </Layout>
 
 <style>
+  h3 > span {
+    @apply block sm:inline;
+  }
+
   b {
-    @apply align-middle text-center mb-2 inline-block;
+    @apply align-middle text-center mb-2 hidden sm:inline-block;
   }
 
   @media (max-width: 768px) {

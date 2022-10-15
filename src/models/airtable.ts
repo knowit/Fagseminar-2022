@@ -1,3 +1,5 @@
+/// <reference types="astro/astro-jsx" />
+
 export interface TimeSlotInfo {
   start: string;
   title: string;
@@ -17,18 +19,11 @@ export interface TimeSlotInfo {
   email?: string;
   type: string;
   required_knowledge?: string;
+  pic?: astroHTML.JSX.ImgHTMLAttributes;
 }
 
 export interface TimeRecord {
   id: string;
   createdTime: Date;
   fields: TimeSlotInfo;
-}
-
-enum rooms {
-  SDP = "Salone dei Papi",
-  SLO = "Sala Lambertini + Odescalchi",
-  SOA = "Sala Ottoboni + Aldobrandini",
-  SPDR = "Sala Piccolomini + Della Rovere",
-  SC = "Sala Chigi",
 }

@@ -1,11 +1,12 @@
 ---
-import romaSvg from "./img/Roma-logo.svg";
+import romaSvg from "./img/Roma-logo-mono.png";
+import { Picture } from "@astrojs/image/components";
 ---
 
-<img src={romaSvg} />
-
-<style>
-  img {
-    @apply w-full max-h-full;
-  }
-</style>
+<Picture
+  class=""
+  src={romaSvg}
+  alt=""
+  widths={[200, 400, 800]}
+  sizes="(max-width: 800px) 100vw, 800px"
+/>

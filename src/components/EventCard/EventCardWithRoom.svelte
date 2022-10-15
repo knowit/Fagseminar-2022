@@ -1,10 +1,13 @@
 <script lang="ts">
   import type { TimeRecord } from "../../models/airtable";
   import { getImageUrl, getNiceType, getRoomName } from "../../util/util";
+  import EventCard from "./EventCard.svelte";
 
   export let data: TimeRecord;
 
   export let className: String;
+
+  const pic = { ...data.fields.pic, style: "" };
 </script>
 
 <article class={` ${className}`}>
@@ -14,11 +17,9 @@
   <a href={"/Fagseminar-2022/slot/" + data.id}>
     <figure class="flex items-center my-1 gap-x-3">
       <span class="circle-image">
-        <img
-          src={`/Fagseminar-2022/pictures/${getImageUrl(data)}`}
-          alt=""
-          class="max-w-sm w-40"
-        />
+        {#if pic != null}
+          <img alt="" src={pic.src} loading="lazy" decoding="async" />
+        {/if}
       </span>
       <figcaption class="font-bold text-sm">
         {data.fields.userIds != null ? data.fields.userIds : ""}

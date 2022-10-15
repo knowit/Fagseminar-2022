@@ -1,16 +1,36 @@
 ---
-import EventCard from "../components/EventCard/EventCard.svelte";
-import EventCardHeader from "../components/EventCard/EventCardHeader.svelte";
+import { getImage } from "@astrojs/image";
+
 import FavoritesList from "../components/Favorite/FavoritesList.svelte";
 import Layout from "../layouts/Layout.astro";
+import type { TimeRecord } from "../models/airtable";
 import { getData } from "../util/fetchUtil";
+import { getImageUrl } from "../util/util";
 
 const data = await getData();
+
+const mappedData: TimeRecord[] = [];
+
+for (let index = 0; index < data.length; index++) {
+  const element = data[index];
+  mappedData.push({
+    ...element,
+    fields: { ...element.fields, pic: await getPic(element) },
+  });
+}
+
+async function getPic(slot: TimeRecord) {
+  return await getImage({
+    src: import(`../src/pictures/${getImageUrl(slot)}`),
+    width: 200,
+    format: "avif",
+  });
+}
 ---
 
 <Layout title="Knowit Fagseminar Roma 2022" currentPage="Favoritter">
   <main class="w-full h-full lg:pt-8 m-auto">
     <h2 class="text-5xl w-fit mx-auto mb-4 lg:mb-0">Dine favoritter</h2>
-    <FavoritesList client:load data={data} />
+    <FavoritesList client:load data={mappedData} />
   </main>
 </Layout>
