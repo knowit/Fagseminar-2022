@@ -21,7 +21,7 @@ for (let index = 0; index < data.length; index++) {
 
 async function getPic(slot: TimeRecord) {
   return await getImage({
-    src: import(`../pictures/${getImageUrl(slot)}`),
+    src: import(`../pictures/${slot.id}.png`),
     width: 200,
     format: "avif",
   });
