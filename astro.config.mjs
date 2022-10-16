@@ -8,7 +8,13 @@ import { FileSystemIconLoader } from "unplugin-icons/loaders";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [tailwind(), svelte({ preprocess: autoPreprocess() }), image()],
+  integrations: [
+    tailwind(),
+    svelte({ preprocess: autoPreprocess() }),
+    image({
+      serviceEntryPoint: "@astrojs/image/sharp",
+    }),
+  ],
   site: "https://knowit.github.io",
   base: "/Fagseminar-2022",
 

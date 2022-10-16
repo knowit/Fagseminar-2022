@@ -9,16 +9,8 @@ import en from "date-fns/locale/en-GB/index.js";
 
 import { formatDate } from "../../util/localeUtil";
 
-import { Icon } from "astro-icon";
+import { firstLetterUppercase } from "../../util/util";
 
-import {
-  applicableRooms,
-  applicableStartTimes,
-  firstLetterUppercase,
-  getImageUrl,
-} from "../../util/util";
-
-import ProgramListGridGap from "../../components/ProgramListGridGap.astro";
 import DayHeader from "../../components/DayHeader.astro";
 import ProgramListFlex from "../../components/ProgramListFlex.astro";
 
@@ -27,8 +19,6 @@ export interface Props {
   relevantSlots: TimeRecord[];
   previousDate?: string;
   nextDate?: string;
-  startTimes: string[];
-  rooms: string[];
 }
 
 export async function getStaticPaths() {
@@ -48,15 +38,12 @@ export async function getStaticPaths() {
         relevantSlots: timeSlots,
         previousDate: dayKeys[index - 1],
         nextDate: dayKeys[index + 1],
-        startTimes: applicableStartTimes(timeSlots),
-        rooms: applicableRooms(timeSlots),
       },
     };
   });
 }
 
-const { relevantSlots, date, previousDate, nextDate, startTimes, rooms } =
-  Astro.props;
+const { relevantSlots, date, previousDate, nextDate } = Astro.props;
 ---
 
 <Layout

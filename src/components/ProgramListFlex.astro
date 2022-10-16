@@ -96,8 +96,6 @@ function getTimeSpanLi(
     }
   });
 
-  console.log(arr);
-
   return arr;
 }
 
@@ -105,7 +103,6 @@ function getBuffer(slot: TimeRecord, otherSlots: TimeRecord[]) {
   const v = getTimeSpanAmount(slot, otherSlots);
 
   if (v != null) {
-    console.log("%s %o", slot.fields.userIds, v);
     return getTimeSpanLi(slot.fields.room, v);
   }
   return [];
@@ -235,8 +232,6 @@ const { relevantSlots } = Astro.props;
 
   function scrollToPrev() {
     var x = window.matchMedia("(max-width: 768px)");
-    console.log("Got Here");
-    console.log(RSize);
     if (container != null) {
       if (x.matches) {
         container.scrollBy(-RSize, 0);
@@ -247,13 +242,11 @@ const { relevantSlots } = Astro.props;
   }
   function scrollToNext() {
     var x = window.matchMedia("(max-width: 768px)");
-    console.log("Got Here");
-    console.log(RSize);
+
     if (container != null) {
       if (x.matches) {
         container.scrollBy(RSize, 0);
       } else {
-        console.log("does not");
         container.scrollBy(container.clientWidth, 0);
       }
     }

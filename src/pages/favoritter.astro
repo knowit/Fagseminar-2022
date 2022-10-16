@@ -5,7 +5,6 @@ import FavoritesList from "../components/Favorite/FavoritesList.svelte";
 import Layout from "../layouts/Layout.astro";
 import type { TimeRecord } from "../models/airtable";
 import { getData } from "../util/fetchUtil";
-import { getImageUrl } from "../util/util";
 
 const data = await getData();
 

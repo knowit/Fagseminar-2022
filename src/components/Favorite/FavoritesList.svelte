@@ -12,7 +12,6 @@
 
   const unsubscribe = favorites.subscribe((value) => {
     dataFavorites = data.filter((data) => value.includes(data.id));
-    console.log(dataFavorites);
   });
 
   onDestroy(unsubscribe);
