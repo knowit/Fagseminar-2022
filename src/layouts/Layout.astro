@@ -18,7 +18,7 @@ const linkSelected = "navLink selectedPage";
 ---
 
 <!DOCTYPE html>
-<html lang="en" class="w-screen min-h-full h-screen min-w-full">
+<html lang="nb" class="w-screen min-h-full h-screen min-w-full">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -73,7 +73,7 @@ const linkSelected = "navLink selectedPage";
             <RomaLogoColored />
           </div>
         ) : (
-          <div class="w-96 md:w-fit md:mb-5 text-center mx-auto">
+          <div class="w-96 md:w-fit text-center mx-auto lg:pb-10">
             <RomaLogoMono />
           </div>
         )
@@ -104,10 +104,10 @@ const linkSelected = "navLink selectedPage";
           @apply w-screen min-h-full h-screen max-w-full;
         }
         body {
-          @apply bg-ksand lg:px-20;
+          @apply bg-ksand xl:px-20 border;
         }
-        main {
-          @apply w-full h-full mx-auto py-2 md:py-5 px-4 lg:px-0;
+        body > main {
+          @apply w-full h-full mx-auto py-2 md:py-5 px-4 xl:px-0;
         }
       }
 

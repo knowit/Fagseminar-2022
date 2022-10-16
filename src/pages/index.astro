@@ -1,25 +1,15 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import DescriptionMarkdown from "../markdown/IndexDescription.md";
 ---
 
 <Layout title="Knowit Fagseminar Roma 2022" currentPage="Home" fullLogo={true}>
   <main class="flex flex-col gap-y-6">
-    <section class="w-full text-center">
-      <h2 class="block text-3xl sm:text-5xl font-bold w-full text-center mb-3">
-        Program 20-23 October 2022
-      </h2>
-      <p class="w-full max-w-5xl text-center mx-auto">
-        Knowit Objectnet loren isun sit amet, loren isun sit ametloren isun sit
-        ametloren isun sit ametloren isun sit ametloren isun sit ametloren isun
-        sit ametloren isun sit ametloren isun sit ametloren isun sit ametloren
-        isun sit ame. Knowit Objectnet loren isun sit amet, loren isun sit
-        ametloren isun sit ametloren isun sit ametloren isun sit ametloren isun
-        sit ametloren isun sit ametloren isun sit ametloren isun sit ametloren
-        isun sit ametloren isun sit ame.
-      </p>
+    <section class="markdown-container w-full text-center">
+      <DescriptionMarkdown />
     </section>
 
-    <h3 class="text-center text-3xl font-bold mt-4">Agenda</h3>
+    <h3 class="text-center text-3xl font-bold mt-8">Agenda</h3>
 
     <div>
       <a>
@@ -113,6 +103,14 @@ import Layout from "../layouts/Layout.astro";
   </main>
 </Layout>
 
+<style is:global>
+  .markdown-container > h1 {
+    @apply font-bold text-3xl md:text-4xl lg:text-5xl mx-auto w-fit mb-2;
+  }
+  .markdown-container > p {
+    @apply text-lg max-w-prose mx-auto;
+  }
+</style>
 <style>
   @tailwind base;
 

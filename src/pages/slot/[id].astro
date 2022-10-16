@@ -5,6 +5,7 @@ import type { TimeRecord, TimeSlotInfo } from "../../models/airtable";
 import { getData } from "../../util/fetchUtil";
 import { formatDate } from "../../util/localeUtil";
 import { getRoomName, getNiceType, getImageUrl } from "../../util/util";
+import { marked } from "marked";
 export interface Props {
   slot: TimeRecord;
 }
@@ -30,6 +31,10 @@ function getSubtitleString(slot: TimeSlotInfo) {
   } ${getDateString(slot.date)} | Rom: ${slot.room}`;
 }
 
+function getDescriptionParsedAsMarkdown(description: string) {
+  return marked.parse(description);
+}
+
 const { slot } = Astro.props;
 const slotInfo = slot.fields;
 ---
@@ -38,12 +43,12 @@ const slotInfo = slot.fields;
   title={slotInfo.title + " - Knowit Fagseminar Roma"}
   currentPage="Program"
 >
-  <main class="h-full my-auto sm:w-11/12">
+  <main class="h-full my-auto lg:pt-10">
     <article
-      class="max-w-fit grid grid-flow-row gap-10 justify-between m-auto article"
+      class="grid grid-flow-row gap-10 justify-between m-auto article max-w-screen-2xl"
     >
-      <section>
-        <h2 class="block text-4xl lg:text-5xl font-bold w-full pt-4 lg:pt-0">
+      <header>
+        <h2 class="block text-4xl lg:text-5xl font-bold w-full">
           {slotInfo.title}
         </h2>
         <h3 class="text-2xl h-fit text-ellipsis w-full">
@@ -59,41 +64,62 @@ const slotInfo = slot.fields;
             Rom: <strong>{getRoomName(slotInfo.room)}</strong>
           </span>
         </h3>
-        <a
-          class="italic text-lg underline text-klollipop"
-          href="https://www.app2u.se/ords/f?p=700:1012:::::P0_EVENT_ID,P0_PAGE_ID,P0_INVITATION_CODE:7641976,7872744,BvuiznGrjfT9bCkCH7Gcf8e3426"
-          >Workshop Påmelding</a
-        >
-      </section>
+        {
+          slot.fields.type === "workshop" ? (
+            <a
+              class="italic text-lg underline text-klollipop"
+              href="https://www.app2u.se/ords/f?p=700:1012:::::P0_EVENT_ID,P0_PAGE_ID,P0_INVITATION_CODE:7641976,7872744,BvuiznGrjfT9bCkCH7Gcf8e3426"
+            >
+              Workshop Påmelding
+            </a>
+          ) : (
+            ""
+          )
+        }
+      </header>
 
-      <p class="text-lg">{slotInfo.description}</p>
+      <main
+        class="text-lg"
+        set:html={getDescriptionParsedAsMarkdown(slotInfo.description ?? "")}
+      >
+      </main>
 
-      <div class="bio-container flex gap-y-5 gap-x-6 w-full">
+      <footer class="bio-container flex gap-y-5 gap-x-6 w-full">
         <section class="flex flex-col justify-center items-center min-w-fit">
-          <div
-            class="max-w-2xl rounded-2xl w-44 lg:w-64 inline-block relative overflow-hidden"
-          >
+          <div class="image rounded-2xl inline-block relative overflow-hidden">
             <Picture
               widths={[200, 400, 800]}
               sizes="(max-width: 800px) 100vw, 800px"
               formats={["avif", "webp"]}
               src={import(`../../pictures/${slot.id}.png`)}
               alt=""
-              class="max-w-sm w-40"
+              class=""
             />
           </div>
           <h4 class="font-semibold text-lg">{slotInfo.userIds}</h4>
-          <em>{slotInfo.email}</em>
+          <a href={`mailto: ${slot.fields.email}`}><em>{slotInfo.email}</em></a>
         </section>
         <p class="my-auto md:w-full md:max-w-prose bio">
           {slotInfo.speaker_bio}
         </p>
-      </div>
+      </footer>
     </article>
   </main>
 </Layout>
 
+<style is:global>
+  .image picture,
+  .image source,
+  .image img {
+    @apply max-h-60  lg:max-h-80;
+  }
+</style>
+
 <style>
+  .image {
+    @apply max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl;
+  }
+
   h3 > span {
     @apply block sm:inline;
   }
@@ -114,9 +140,5 @@ const slotInfo = slot.fields;
 
   p {
     @apply text-lg;
-  }
-
-  .article {
-    grid-template-rows: ;
   }
 </style>

@@ -5,6 +5,7 @@ import autoPreprocess from "svelte-preprocess";
 import image from "@astrojs/image";
 import Icons from "unplugin-icons/vite";
 import { FileSystemIconLoader } from "unplugin-icons/loaders";
+import a11yEmoji from "@fec/remark-a11y-emoji";
 
 // https://astro.build/config
 export default defineConfig({
@@ -17,6 +18,10 @@ export default defineConfig({
   ],
   site: "https://knowit.github.io",
   base: "/Fagseminar-2022",
+
+  markdown: {
+    remarkPlugins: [a11yEmoji],
+  },
 
   vite: {
     plugins: [

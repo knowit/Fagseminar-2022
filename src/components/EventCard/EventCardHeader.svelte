@@ -18,7 +18,7 @@
   $: favorite = data != null ? $favorites.includes(data.id) : false;
 </script>
 
-<div class="space-x-1 flex justify-between items-center">
+<div class="space-x-1 flex justify-between items-center h-10">
   <a href={"/Fagseminar-2022/slot/" + data.id}
     ><strong class="text-lg"
       >{(data.fields.start + " - " + data.fields.end).replaceAll(
@@ -34,8 +34,8 @@
       {data.fields.duration} MIN
     </p></a
   >
-  <div class="icon align-middle">
-    <button on:click={handleClick} class="w-10 h-10 m-auto z-50">
+  <div class=" w-8 h-8 lg:w-10 lg:h-10">
+    <button on:click={handleClick} class="w-8 h-8 lg:w-10 lg:h-10">
       {#if favorite}
         <ICO_Heart_Selected width="100%" height="100%" />
       {:else}<ICO_Heart_Unselected width="100%" height="100%" />{/if}
@@ -45,23 +45,12 @@
 
 <style>
   @media (max-width: 768px) {
-    .icon {
-      width: 2.5rem;
-      height: 2.5rem;
-    }
-
     p {
       font-size: 1.2rem;
     }
 
     strong {
       font-size: 1.2rem;
-    }
-  }
-  @media (min-width: 768px) {
-    .icon {
-      width: 2rem;
-      height: 2rem;
     }
   }
 </style>
