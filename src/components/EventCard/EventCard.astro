@@ -1,8 +1,7 @@
 ---
 import type { TimeRecord } from "../../models/airtable";
-import { getImageUrl, getNiceType, getSpeakerPhoto } from "../../util/util";
+import { getNiceType } from "../../util/util";
 import { Picture } from "@astrojs/image/components";
-import { Icon } from "astro-icon";
 
 export interface Props {
   data: TimeRecord;
@@ -10,30 +9,36 @@ export interface Props {
 }
 
 const { className, data } = Astro.props;
-const imgSrc = (await import(`../../pictures/${data.id}.png`)).default;
 ---
 
 <article class={`${className}`}>
   <div class="w-full">
     <slot name="favorite" />
   </div>
-  <a href={"/Fagseminar-2022/slot/" + data.id}>
+  <a class="block" href={"/Fagseminar-2022/slot/" + data.id}>
     <figure class="my-1 flex items-center gap-x-2">
       <span class="circle-image">
         <Picture
-          class={"m-auto"}
-          src={imgSrc}
+          class={"m-auto "}
+          src={import(`../../pictures/${data.id}.png`)}
           alt=""
           widths={[100, 200]}
           sizes="(max-width: 200px) 100px, 200px"
           formats={["avif", "webp"]}
         />
       </span>
-      <figcaption class="font-bold">
+      <figcaption
+        class:list={[
+          "font-bold text-ellipsis w-full",
+          data.fields.userIds != null && data.fields.userIds?.length >= 40
+            ? "text-sm"
+            : "",
+        ]}
+      >
         {data.fields.userIds != null ? data.fields.userIds : ""}
       </figcaption>
     </figure>
-    <p class="text-clip mb-1">
+    <p class="text-ellipsis mb-1">
       {
         data.fields.title.length >= 80
           ? data.fields.title.substring(0, 80) + "..."
@@ -69,7 +74,7 @@ const imgSrc = (await import(`../../pictures/${data.id}.png`)).default;
     display: inline-block;
     border-radius: 50%;
     overflow: hidden;
-    width: 50px;
+    width: 60px;
     height: 50px;
   }
 </style>

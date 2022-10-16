@@ -190,7 +190,7 @@ const { relevantSlots } = Astro.props;
             {room.slots.map((slot) => {
               return (
                 <>
-                  <li class="h-48 w-11/12 mx-auto lg:hover:border-klollipop border border-transparent">
+                  <li class="h-52 w-11/12 mx-auto lg:hover:border-klollipop border border-transparent">
                     <EventCard data={slot} className={""}>
                       <EventCardHeader
                         slot="favorite"
@@ -201,7 +201,7 @@ const { relevantSlots } = Astro.props;
                   </li>
                   {getBuffer(slot, relevantSlots).map((value) => {
                     return (
-                      <li class:list={[value, "whitespace-class h-48 "]}>
+                      <li class:list={[value, "whitespace-class h-52"]}>
                         <div class="mx-auto h-full w-[3px] bg-kleather whitediv" />
                       </li>
                     );

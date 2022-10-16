@@ -24,6 +24,8 @@ export function getNiceType(type: string): string {
       return "Lyntale";
     case "talk":
       return "Foredrag";
+    case "interactiveTalk":
+      return "Interaktivt Foredrag";
     case "workshop":
       return "Workshop";
     case "discussion":

@@ -97,7 +97,14 @@ const slotInfo = slot.fields;
             />
           </div>
           <h4 class="font-semibold text-lg">{slotInfo.userIds}</h4>
-          <a href={`mailto: ${slot.fields.email}`}><em>{slotInfo.email}</em></a>
+          {slot.fields.email?.includes("&") 
+          ? 
+          <a href={`mailto: ${slot.fields.email.split("&")[0].trim()}`}><em>{slot.fields.email.split("&")[0].trim()}</em></a> 
+          <a href={`mailto: ${slot.fields.email.split("&")[1].trim()}`}><em>{slot.fields.email.split("&")[1].trim()}</em></a> 
+          : 
+          <a href={`mailto: ${slot.fields.email}`}><em>{slotInfo.email}</em></a> 
+          }
+          
         </section>
         <p class="my-auto md:w-full md:max-w-prose bio">
           {slotInfo.speaker_bio}
