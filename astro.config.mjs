@@ -16,7 +16,7 @@ export default defineConfig({
       serviceEntryPoint: "@astrojs/image/sharp",
     }),
   ],
-  site: "https://knowit.github.io",
+  site: "https://roma.knowit.no",
 
   markdown: {
     remarkPlugins: [a11yEmoji],
