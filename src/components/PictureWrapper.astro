@@ -1,0 +1,17 @@
+---
+import { Picture } from "@astrojs/image/components";
+
+export interface Props {
+  pictureId: string;
+}
+
+const { pictureId } = Astro.props;
+---
+
+<Picture
+  widths={[200, 400, 800]}
+  sizes="(max-width: 800px) 200px, 800px"
+  formats={["avif", "webp"]}
+  src={import(`../pictures/${pictureId}.png`)}
+  alt=""
+/>

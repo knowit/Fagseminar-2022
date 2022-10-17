@@ -17,8 +17,10 @@
   <a href={"/Fagseminar-2022/slot/" + data.id}>
     <figure class="flex items-center my-1 gap-x-3">
       <span class="circle-image">
-        {#if pic != null}
-          <img alt="" src={pic.src} loading="lazy" decoding="async" />
+        {#if pic != null && pic.sources != null && pic.image != null}
+          <picture>
+            <img alt="" src={pic.src} loading="lazy" decoding="async" />
+          </picture>
         {/if}
       </span>
       <figcaption class="font-bold text-sm">

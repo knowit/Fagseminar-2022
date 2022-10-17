@@ -4,8 +4,10 @@ import Layout from "../../layouts/Layout.astro";
 import type { TimeRecord, TimeSlotInfo } from "../../models/airtable";
 import { getData } from "../../util/fetchUtil";
 import { formatDate } from "../../util/localeUtil";
-import { getRoomName, getNiceType, getImageUrl } from "../../util/util";
+import { getRoomName, getNiceType } from "../../util/util";
 import { marked } from "marked";
+import PictureWrapper from "../../components/PictureWrapper.astro";
+import FavoriteButton from "../../components/favorite/FavoriteButton.svelte";
 export interface Props {
   slot: TimeRecord;
 }
@@ -48,10 +50,13 @@ const slotInfo = slot.fields;
       class="grid grid-flow-row gap-10 justify-between m-auto article max-w-screen-2xl"
     >
       <header>
+        
         <h2 class="block text-4xl lg:text-5xl font-bold w-full">
           {slotInfo.title}
         </h2>
-        <h3 class="text-2xl h-fit text-ellipsis w-full">
+        
+   
+        <h3 class="text-2xl  h-fit text-ellipsis w-full">
           <span
             >{getNiceType(slotInfo.type)} - <strong
               >{slotInfo.duration} Min <b class="">|</b>
@@ -76,6 +81,7 @@ const slotInfo = slot.fields;
             ""
           )
         }
+        
       </header>
 
       <main
@@ -85,27 +91,21 @@ const slotInfo = slot.fields;
       </main>
 
       <footer class="bio-container flex gap-y-5 gap-x-6 w-full">
-        <section class="flex flex-col justify-center items-center min-w-fit">
-          <div class="image rounded-2xl inline-block relative overflow-hidden">
-            <Picture
-              widths={[200, 400, 800]}
-              sizes="(max-width: 800px) 100vw, 800px"
-              formats={["avif", "webp"]}
-              src={import(`../../pictures/${slot.id}.png`)}
-              alt=""
-              class=""
-            />
+        <figure class="min-w-fit">
+          <div class="image rounded-2xl w-fit mx-auto">
+            <PictureWrapper pictureId={slot.id} />
           </div>
-          <h4 class="font-semibold text-lg">{slotInfo.userIds}</h4>
+          <figurecaption class="flex flex-col items-center">
+          <h4 class="font-semibold block text-lg w-fit">{slotInfo.userIds}</h4>
           {slot.fields.email?.includes("&") 
           ? 
-          <a href={`mailto: ${slot.fields.email.split("&")[0].trim()}`}><em>{slot.fields.email.split("&")[0].trim()}</em></a> 
-          <a href={`mailto: ${slot.fields.email.split("&")[1].trim()}`}><em>{slot.fields.email.split("&")[1].trim()}</em></a> 
+          <a class="block w-fit" href={`mailto: ${slot.fields.email.split("&")[0].trim()}`}><em>{slot.fields.email.split("&")[0].trim()}</em></a> 
+          <a class="block w-fit" href={`mailto: ${slot.fields.email.split("&")[1].trim()}`}><em>{slot.fields.email.split("&")[1].trim()}</em></a> 
           : 
           <a href={`mailto: ${slot.fields.email}`}><em>{slotInfo.email}</em></a> 
           }
-          
-        </section>
+          </figurecaption>
+        </figure>
         <p class="my-auto md:w-full md:max-w-prose bio">
           {slotInfo.speaker_bio}
         </p>
@@ -127,10 +127,6 @@ const slotInfo = slot.fields;
     @apply max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl;
   }
 
-  h3 > span {
-    @apply block sm:inline;
-  }
-
   b {
     @apply align-middle text-center mb-2 hidden sm:inline-block;
   }
@@ -139,6 +135,10 @@ const slotInfo = slot.fields;
     .bio-container {
       @apply flex-wrap justify-center text-center;
     }
+  }
+
+  header > h3 {
+    @apply flex flex-col sm:block
   }
 
   strong {
