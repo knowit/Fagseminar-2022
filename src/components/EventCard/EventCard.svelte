@@ -11,11 +11,11 @@
   <div class="w-full ">
     <slot name="favorite" />
   </div>
-  <a href={"/Fagseminar-2022/slot/" + data.id}>
+  <a href={"/slot/" + data.id}>
     <figure class="my-1 flex items-center gap-x-2">
       <span class="circle-image">
         <img
-          src={`/Fagseminar-2022/pictures/${getImageUrl(data)}`}
+          src={`/pictures/${getImageUrl(data)}`}
           alt=""
           class="max-w-sm w-40"
         />

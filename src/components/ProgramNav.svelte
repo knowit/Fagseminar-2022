@@ -3,7 +3,7 @@
   import format from "date-fns/format/index.js";
   import en from "date-fns/locale/en-GB/index.js";
 
-  const baseHrefLink = "/Fagseminar-2022/program/";
+  const baseHrefLink = "/program/";
 
   function getClosestDate() {
     const dates = [new Date(2022, 9, 21), new Date(2022, 9, 23)];
@@ -33,10 +33,7 @@
   }
 </script>
 
-<a
-  href={`/Fagseminar-2022/program/${getDayName(getClosestDate())}`}
-  class={style}><slot /></a
->
+<a href={`/program/${getDayName(getClosestDate())}`} class={style}><slot /></a>
 
 <style>
 </style>

@@ -16,8 +16,7 @@ export default defineConfig({
       serviceEntryPoint: "@astrojs/image/sharp",
     }),
   ],
-  site: "https://knowit.github.io",
-  base: "/Fagseminar-2022",
+  site: "https://roma.knowit.no",
 
   markdown: {
     remarkPlugins: [a11yEmoji],

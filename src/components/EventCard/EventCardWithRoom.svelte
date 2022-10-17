@@ -13,7 +13,7 @@
   <div class="w-full">
     <slot name="favorite" />
   </div>
-  <a href={"/Fagseminar-2022/slot/" + data.id}>
+  <a href={"/slot/" + data.id}>
     <figure class="flex items-center my-1 gap-x-3">
       <span class="circle-image">
         {#if pic != null}

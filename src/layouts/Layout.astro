@@ -22,7 +22,7 @@ const linkSelected = "navLink selectedPage";
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/svg+xml" href="/Fagseminar-2022/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
@@ -32,9 +32,7 @@ const linkSelected = "navLink selectedPage";
       <nav
         class="w-full px-2 lg:px-0 text-center flex justify-between my-auto h-fit py-2 items-center"
       >
-        <a href="/Fagseminar-2022/" class="w-80 sm:w-92"
-          ><KnowitRomaHeader />
-        </a>
+        <a href="/" class="w-80 sm:w-92"><KnowitRomaHeader /></a>
 
         <input id="menu-toggle" type="checkbox" />
         <label class="menu-button-container" for="menu-toggle">
@@ -45,7 +43,7 @@ const linkSelected = "navLink selectedPage";
           <li>
             <a
               class={currentPage === "Home" ? linkSelected : linkNotSelected}
-              href="/Fagseminar-2022/">Home</a
+              href="/">Home</a
             >
           </li>
           <li>
@@ -60,7 +58,7 @@ const linkSelected = "navLink selectedPage";
               class={currentPage === "Favoritter"
                 ? linkSelected
                 : linkNotSelected}
-              href="/Fagseminar-2022/favoritter">Favoritter</a
+              href="/favoritter">Favoritter</a
             >
           </li>
         </ul>

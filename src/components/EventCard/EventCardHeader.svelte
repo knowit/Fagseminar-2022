@@ -19,7 +19,7 @@
 </script>
 
 <div class="space-x-1 flex justify-between items-center h-10">
-  <a href={"/Fagseminar-2022/slot/" + data.id}
+  <a href={"/slot/" + data.id}
     ><strong class="text-lg"
       >{(data.fields.start + " - " + data.fields.end).replaceAll(
         ":",
@@ -27,7 +27,7 @@
       )}</strong
     ></a
   >
-  <a href={"/Fagseminar-2022/slot/" + data.id}
+  <a href={"/slot/" + data.id}
     ><p
       class={`font-bold ${favorite ? "text-klollipop" : "text-defaultGray"} `}
     >

@@ -21,7 +21,7 @@ const { previousDate, nextDate, date } = Astro.props;
     <a
       class={`caret  ${previousDate != null ? "" : "pointer-events-none"} `}
       href={previousDate != null
-        ? `/Fagseminar-2022/program/${format(new Date(previousDate), "EEEE", {
+        ? `/program/${format(new Date(previousDate), "EEEE", {
             locale: en,
           }).toLowerCase()}`
         : ""}
@@ -38,7 +38,7 @@ const { previousDate, nextDate, date } = Astro.props;
     <a
       class={`caret  ${nextDate != null ? "" : "pointer-events-none"}`}
       href={nextDate != null
-        ? `/Fagseminar-2022/program/${format(new Date(nextDate), "EEEE", {
+        ? `/program/${format(new Date(nextDate), "EEEE", {
             locale: en,
           }).toLowerCase()}`
         : ""}
