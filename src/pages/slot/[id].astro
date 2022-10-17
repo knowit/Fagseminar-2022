@@ -1,5 +1,5 @@
 ---
-import { Picture } from "@astrojs/image/components";
+
 import Layout from "../../layouts/Layout.astro";
 import type { TimeRecord, TimeSlotInfo } from "../../models/airtable";
 import { getData } from "../../util/fetchUtil";
@@ -7,7 +7,6 @@ import { formatDate } from "../../util/localeUtil";
 import { getRoomName, getNiceType } from "../../util/util";
 import { marked } from "marked";
 import PictureWrapper from "../../components/PictureWrapper.astro";
-import FavoriteButton from "../../components/favorite/FavoriteButton.svelte";
 export interface Props {
   slot: TimeRecord;
 }

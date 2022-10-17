@@ -1,7 +1,6 @@
 <script lang="ts">
   import type { TimeRecord } from "../../models/airtable";
-  import { getImageUrl, getNiceType, getRoomName } from "../../util/util";
-  import EventCard from "./EventCard.svelte";
+  import { getNiceType, getRoomName } from "../../util/util";
 
   export let data: TimeRecord;
 
@@ -17,10 +16,8 @@
   <a href={"/Fagseminar-2022/slot/" + data.id}>
     <figure class="flex items-center my-1 gap-x-3">
       <span class="circle-image">
-        {#if pic != null && pic.sources != null && pic.image != null}
-          <picture>
-            <img alt="" src={pic.src} loading="lazy" decoding="async" />
-          </picture>
+        {#if pic != null}
+          <img alt="" src={pic.src} loading="lazy" decoding="async" />
         {/if}
       </span>
       <figcaption class="font-bold text-sm">
