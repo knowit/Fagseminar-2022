@@ -17,6 +17,7 @@ export default defineConfig({
     }),
   ],
   site: "https://roma.knowit.no",
+  base: "/",
 
   markdown: {
     remarkPlugins: [a11yEmoji],

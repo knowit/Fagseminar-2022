@@ -14,6 +14,9 @@ import { firstLetterUppercase } from "../../util/util";
 import DayHeader from "../../components/DayHeader.astro";
 import ProgramListFlex from "../../components/ProgramListFlex.astro";
 
+import { csv } from "../../json/changes-18-10-2022";
+import { marked } from "marked";
+
 export interface Props {
   date: string;
   relevantSlots: TimeRecord[];
@@ -42,6 +45,14 @@ export async function getStaticPaths() {
     };
   });
 }
+const changes = csv
+  .split("\n")
+  .filter((value, index) => index !== 0)
+  .map((value) =>
+    value
+      .split(";")
+      .map((value) => value.split("-").map((value) => value.trim()))
+  );
 
 const { relevantSlots, date, previousDate, nextDate } = Astro.props;
 ---
@@ -56,7 +67,36 @@ const { relevantSlots, date, previousDate, nextDate } = Astro.props;
       <DayHeader date={date} nextDate={nextDate} previousDate={previousDate} />
     </div>
 
-    <div class="">
+    <details class="mx-auto w-fit my-4 block">
+      <summary class="mx-auto w-fit text-sm italic"
+        >Endringer i programmet</summary
+      >
+      <div class="overflow-y-scroll max-h-60 border">
+        <h3 class="font-bold">Endringer 18/10/2022</h3>
+        <table class="border text-sm">
+          <thead class="sitcky top-0"
+            ><tr class="font-bold"
+              ><th>Navn</th><th>Før Endring</th><th>Etter Endring</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              changes.map((change) => {
+                return (
+                  <tr>
+                    <td class="italics">{change[0]}</td>
+                    <td>{change[1].join(" - ")}</td>
+                    <td set:html={marked.parse(change[2].join(" - "))} />
+                  </tr>
+                );
+              })
+            }
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    <div class="relative">
       <ProgramListFlex relevantSlots={relevantSlots} />
     </div>
     <div class="md:mt-2">
@@ -66,5 +106,9 @@ const { relevantSlots, date, previousDate, nextDate } = Astro.props;
 </Layout>
 
 <style>
-
+  table,
+  th,
+  td {
+    @apply border;
+  }
 </style>
