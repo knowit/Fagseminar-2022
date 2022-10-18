@@ -15,6 +15,10 @@ import DayHeader from "../../components/DayHeader.astro";
 import ProgramListFlex from "../../components/ProgramListFlex.astro";
 
 import { csv } from "../../json/changes-18-10-2022";
+<<<<<<< HEAD
+=======
+import Diff from "diff";
+>>>>>>> 2fc3725a1c160617abaf78759a62691d3808f886
 import { marked } from "marked";
 
 export interface Props {
@@ -53,6 +57,15 @@ const changes = csv
       .split(";")
       .map((value) => value.split("-").map((value) => value.trim()))
   );
+<<<<<<< HEAD
+=======
+console.log(changes[1]);
+console.log(
+  Diff.diffArrays(changes[1][1], changes[1][2]).filter(
+    (value) => value.removed != null || value.added != null
+  )
+);
+>>>>>>> 2fc3725a1c160617abaf78759a62691d3808f886
 
 const { relevantSlots, date, previousDate, nextDate } = Astro.props;
 ---
