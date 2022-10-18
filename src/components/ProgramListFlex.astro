@@ -2,13 +2,7 @@
 import { Icon } from "astro-icon";
 import type { TimeRecord } from "../models/airtable";
 import { groupBy } from "../util/groupUtil";
-import {
-  getRoomName,
-  getRowAndCol,
-  getImageUrl,
-  getNiceType,
-  uniqueFilter,
-} from "../util/util";
+import { getRoomName } from "../util/util";
 import EventCard from "./EventCard/EventCard.astro";
 import EventCardHeader from "./EventCard/EventCardHeader.svelte";
 
@@ -140,10 +134,10 @@ function divideByRoom(slots: TimeRecord[]) {
 const { relevantSlots } = Astro.props;
 ---
 
-<div class="w-fit h-fit relative">
+<div class="">
   <div
     id="spcontainer"
-    class="snap-x snap-mandatory sp grid grid-container lg:grid-cols-4 lg:gap-x-6 grid-rows-[1fr,_auto] overflow-auto max-h-screen lg:max-h-full"
+    class="snap-x snap-mandatory sp grid grid-container lg:grid-cols-4 lg:gap-x-6 grid-rows-[1fr,_auto] overflow-x-scroll max-h-screen lg:max-h-full"
   >
     {
       divideByRoom(relevantSlots).map((room, index) => {
@@ -266,6 +260,9 @@ const { relevantSlots } = Astro.props;
     .timeList {
       row-gap: 1.5rem;
     }
+    .grid-container {
+      grid-template-columns: repeat(4, 100%);
+    }
   }
 
   .whitespace-class {
@@ -299,10 +296,6 @@ const { relevantSlots } = Astro.props;
     .whitespace-class {
       @apply block;
     }
-
-    .sp {
-      @apply overflow-auto;
-    }
     .timeList {
       row-gap: 2.5rem;
     }
@@ -312,7 +305,7 @@ const { relevantSlots } = Astro.props;
   }
 
   .sp {
-    @apply lg:overflow-visible;
+    @apply overflow-x-scroll lg:overflow-visible;
   }
 
   .whitespace-class {
