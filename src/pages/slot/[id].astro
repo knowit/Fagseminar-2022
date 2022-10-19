@@ -87,7 +87,7 @@ const slotInfo = slot.fields;
         
       >
       <div id="descriptionContainer" set:html={getDescriptionParsedAsMarkdown(slotInfo.description ?? "")}></div>
-      {slotInfo.required_knowledge != null || slotInfo.requires_pc ? <ul class="pt-3">
+      {(slotInfo.required_knowledge != null && slotInfo.required_knowledge !== "Trenger ingen forkunnskaper") || slotInfo.requires_pc ? <ul class="pt-3">
       {slotInfo.required_knowledge != null ? <li><strong class="font-bold">Krav til forkunnskaper: </strong>{slotInfo.required_knowledge}</li> : ""}
       {slotInfo.requires_pc ? <li ><strong class="font-bold">Utstyrskrav: </strong>{slotInfo.requirement_details != null ? slotInfo.requirement_details : "PC"}</li> : ""}
       </ul> : ""}
@@ -131,7 +131,7 @@ const slotInfo = slot.fields;
 <style>
 
   header > h3 {
-    @apply text-lg md:text-xl lg:text-2xl
+    @apply text-lg md:text-xl lg:text-2xl;
   }
 
 
