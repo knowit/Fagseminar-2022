@@ -20,6 +20,8 @@ export interface TimeSlotInfo {
   type: string;
   required_knowledge?: string;
   pic?: astroHTML.JSX.ImgHTMLAttributes;
+  requires_pc: boolean;
+  requirement_details?: string;
 }
 
 export interface TimeRecord {
