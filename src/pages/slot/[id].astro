@@ -37,6 +37,8 @@ function getDescriptionParsedAsMarkdown(description: string) {
 
 const { slot } = Astro.props;
 const slotInfo = slot.fields;
+
+console.log("%s %s",slotInfo.userIds, slotInfo.title)
 ---
 
 <Layout

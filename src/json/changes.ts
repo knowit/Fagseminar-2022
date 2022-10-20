@@ -1,6 +1,13 @@
 ﻿export const changes20102022 = `Navn;Før;Nå
-Qubes OS - A reasonably secure operating system (Knut Olav Bøhmer);Søndag 23. Oktober - 11:45-1215 - Lambertini + Odescalchi;***Trukket***
-Salg for dummies (Bård Singstad og Hans Frisvold);***NY***;**Søndag 23. Oktober - 11:45-1205 - Lambertini + Odescalchi**`;
+Qubes OS - A reasonably secure operating system (Knut Olav Bøhmer);Søndag 23. Oktober - 11:45-1215 - Lambertini + Odescalchi;**Trukket**
+Bård Singstad og Hans Frisvold;NY;**Søndag 23. Oktober - 11:45-1205 - Lambertini + Odescalchi**
+I can :has() magic now? (Sverre Johann Bjørke);Fredag 21. Oktober - 13:35-13:50 - Lambertini + Odescalchi;**Avlyst**
+Raskt og responsivt søk for statiske nettsider med Stork (Sverre Johann Bjørke);Søndag 23. Oktober - 11:05-11:20 - Ottoboni + Aldobrandini;**Avlyst**
+Obsidian Plugins - Ta notater akkurat slik DU vil (Tom Martin Roberg);Søndag 23. Oktober - 11:05-11:20 - **Chigi**;Søndag 23. Oktober - 11:05-11:20 - **Sala Ottoboni + Aldobrandini**
+Astro: Ut med JS inn med HTML (Tom Martin Roberg);**Søndag 23. Oktober - 11:25-11:40 - Chigi**;**Fredag 21. Oktober - 13:35-13:50 - Sala Lambertini + Odescalchi**
+Rerun Track;NY;**Søndag 23. Oktober - 11:05-1140 - Chigi**
+Hvordan kommunisere muligheter gjennom datavisualisering (Merete Bertheau);Søndag 23. Oktober - **10:25-10:45** - Sala Piccolomini + Della Rovere;Søndag 23. Oktober - **11:25-11:40** - Sala Piccolomini + Della Rovere
+Designe for terrorvarsling (Christian Karlsson);Søndag 23. Oktober - **11:25-11:40** - Sala Piccolomini + Della Rovere;Søndag 23. Oktober - **10:25-10:45** - Sala Piccolomini + Della Rovere`;
 
 export const changes18102022 = `Navn;Før;Nå
 Rekrutteringsteamets intervju-smie (Lars Ivar Næss og Sigmund Marius Nilssen);Søndag 23. Oktober - 09:00 - 11:00 - Sala Piccolomini + Della Rovere ;**Fredag 21. Oktober - 10:10 - 12:10** - Sala Piccolomini + Della Rovere

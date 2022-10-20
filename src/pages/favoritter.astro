@@ -19,6 +19,7 @@ for (let index = 0; index < data.length; index++) {
 }
 
 async function getPic(slot: TimeRecord) {
+  console.log("%s %s", slot.fields.userIds, slot.fields.title);
   return await getImage({
     src: import(`../pictures/${slot.id}.png`),
     width: 200,
