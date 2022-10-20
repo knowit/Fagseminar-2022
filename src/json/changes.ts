@@ -1,4 +1,8 @@
-﻿export const csv = `Navn;Før;Nå
+﻿export const changes20102022 = `Navn;Før;Nå
+Qubes OS - A reasonably secure operating system (Knut Olav Bøhmer);Søndag 23. Oktober - 11:45-1215 - Lambertini + Odescalchi;***Trukket***
+Salg for dummies (Bård Singstad og Hans Frisvold);***NY***;**Søndag 23. Oktober - 11:45-1205 - Lambertini + Odescalchi**`;
+
+export const changes18102022 = `Navn;Før;Nå
 Rekrutteringsteamets intervju-smie (Lars Ivar Næss og Sigmund Marius Nilssen);Søndag 23. Oktober - 09:00 - 11:00 - Sala Piccolomini + Della Rovere ;**Fredag 21. Oktober - 10:10 - 12:10** - Sala Piccolomini + Della Rovere
 pre-commit: Hva, Hvordan og Hvorfor? (Anders Steen Nilsen);Fredag 21. Oktober - 10:10 - 10:40 - Sala Piccolomini + Della Rovere;Fredag 21. Oktober - 10:10 - 10:40 - **Sala Ottoboni + Aldobrandini**
 Encore! (Henning Lund-Hanssen);Fredag 21. Oktober - 10:10 - 10:40 - Sala Ottoboni + Aldobrandini;**Søndag 23. Oktober - 09:00 - 09:30** - **Sala Piccolomini + Della Rovere**

@@ -1,0 +1,49 @@
+---
+import { marked } from "marked";
+
+export interface Props {
+  changesCsv: string;
+  date: string;
+}
+
+const { changesCsv, date } = Astro.props;
+
+const changes = changesCsv
+  .split("\n")
+  .filter((value, index) => index !== 0)
+  .map((value) =>
+    value
+      .split(";")
+      .map((value) => value.split("-").map((value) => value.trim()))
+  );
+---
+
+<h3 class="font-bold">Endringer {date}</h3>
+<table class="border text-sm">
+  <thead class="sitcky top-0"
+    ><tr class="font-bold"
+      ><th>Navn</th><th>Før Endring</th><th>Etter Endring</th>
+    </tr>
+  </thead>
+  <tbody>
+    {
+      changes.map((change) => {
+        return (
+          <tr>
+            <td class="italics">{change[0].join(" - ")}</td>
+            <td set:html={marked.parse(change[1].join(" - "))} />
+            <td set:html={marked.parse(change[2].join(" - "))} />
+          </tr>
+        );
+      })
+    }
+  </tbody>
+</table>
+
+<style>
+  table,
+  th,
+  td {
+    @apply border;
+  }
+</style>

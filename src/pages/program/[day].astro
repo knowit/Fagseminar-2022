@@ -14,8 +14,8 @@ import { firstLetterUppercase } from "../../util/util";
 import DayHeader from "../../components/DayHeader.astro";
 import ProgramListFlex from "../../components/ProgramListFlex.astro";
 
-import { csv } from "../../json/changes-18-10-2022";
-import { marked } from "marked";
+import { changes18102022, changes20102022 } from "../../json/changes";
+import ChangeTable from "../../components/ChangeTable.astro";
 
 export interface Props {
   date: string;
@@ -45,14 +45,6 @@ export async function getStaticPaths() {
     };
   });
 }
-const changes = csv
-  .split("\n")
-  .filter((value, index) => index !== 0)
-  .map((value) =>
-    value
-      .split(";")
-      .map((value) => value.split("-").map((value) => value.trim()))
-  );
 
 const { relevantSlots, date, previousDate, nextDate } = Astro.props;
 ---
@@ -69,30 +61,11 @@ const { relevantSlots, date, previousDate, nextDate } = Astro.props;
 
     <details class="mx-auto w-fit my-4 block">
       <summary class="mx-auto w-fit text-base italic"
-        >Endringer i programmet</summary
+        >Endringer i programmet. Siste oppdatering: 20/10/2022</summary
       >
-      <div class="overflow-y-scroll max-h-60 border">
-        <h3 class="font-bold">Endringer 18/10/2022</h3>
-        <table class="border text-sm">
-          <thead class="sitcky top-0"
-            ><tr class="font-bold"
-              ><th>Navn</th><th>Før Endring</th><th>Etter Endring</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              changes.map((change) => {
-                return (
-                  <tr>
-                    <td class="italics">{change[0]}</td>
-                    <td>{change[1].join(" - ")}</td>
-                    <td set:html={marked.parse(change[2].join(" - "))} />
-                  </tr>
-                );
-              })
-            }
-          </tbody>
-        </table>
+      <div id="changesTableWrapper" class="overflow-y-scroll max-h-60 border">
+        <ChangeTable date="20/10/2022" changesCsv={changes20102022} />
+        <ChangeTable date="18/10/2022" changesCsv={changes18102022} />
       </div>
     </details>
 
@@ -106,9 +79,7 @@ const { relevantSlots, date, previousDate, nextDate } = Astro.props;
 </Layout>
 
 <style>
-  table,
-  th,
-  td {
-    @apply border;
+  #changesTableWrapper > :global(table:not(:last-child)) {
+    @apply mb-2;
   }
 </style>
