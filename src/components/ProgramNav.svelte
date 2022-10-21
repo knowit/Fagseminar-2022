@@ -10,7 +10,7 @@
 
     const today = new Date();
 
-    if (dates.some((date) => date === today)) {
+    if (dates.some((date) => date.toDateString() === today.toDateString())) {
       return today;
     }
 
